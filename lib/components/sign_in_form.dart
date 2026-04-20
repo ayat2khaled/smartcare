@@ -1,6 +1,6 @@
-
 import 'package:first_project/models/sign_in_model.dart';
 import 'package:first_project/screens/sign_up_screen.dart';
+import 'package:first_project/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/screens/home_screen.dart';
 
@@ -13,6 +13,8 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   SignInModel model = SignInModel();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,11 @@ class _SignInFormState extends State<SignInForm> {
           Center(
             child: Text(
               "Sign In",
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textColor),
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
             ),
           ),
 
@@ -48,19 +54,28 @@ class _SignInFormState extends State<SignInForm> {
 
           Text(
             "Email",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: textColor),
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              color: textColor,
+            ),
           ),
           const SizedBox(height: 8),
 
           TextField(
             style: TextStyle(color: textColor),
+            controller: emailController,
             decoration: InputDecoration(
               hintText: "Enter your email",
               hintStyle: TextStyle(color: subTextColor),
               filled: true,
               fillColor: cardColor,
-              border: OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
-              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: borderColor),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: primaryColor, width: 2),
               ),
@@ -71,20 +86,29 @@ class _SignInFormState extends State<SignInForm> {
 
           Text(
             "Password",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: textColor),
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              color: textColor,
+            ),
           ),
           const SizedBox(height: 8),
 
           TextField(
             obscureText: model.isPasswordHidden,
+            controller: passwordController,
             style: TextStyle(color: textColor),
             decoration: InputDecoration(
               hintText: "Enter your password",
               hintStyle: TextStyle(color: subTextColor),
               filled: true,
               fillColor: cardColor,
-              border: OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
-              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: borderColor),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: primaryColor, width: 2),
               ),
@@ -125,10 +149,19 @@ class _SignInFormState extends State<SignInForm> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
+                if (emailController.text.isEmpty ||
+                    passwordController.text.isEmpty) {
+                  showTopSnackBar(context, "Please enter email and password");
+                  return;
+                } else if (emailController.text == "ayat@gmail.com" &&
+                    passwordController.text == "123456") {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                } else {
+                  showTopSnackBar(context, "Invalid email or password");
+                }
               },
               child: const Text(
                 "Log In",
@@ -146,7 +179,11 @@ class _SignInFormState extends State<SignInForm> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   "Or",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: textColor),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: textColor,
+                  ),
                 ),
               ),
               Expanded(child: Divider(thickness: 1, color: borderColor)),
@@ -166,8 +203,7 @@ class _SignInFormState extends State<SignInForm> {
                       onTap: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUp()),
+                          MaterialPageRoute(builder: (context) => SignUp()),
                         );
                       },
                       child: Text(

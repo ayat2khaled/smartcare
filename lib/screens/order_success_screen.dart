@@ -2,6 +2,7 @@ import 'package:first_project/models/notification_model.dart';
 import 'package:first_project/providers/notification_provider.dart';
 import 'package:first_project/providers/order_provider.dart';
 import 'package:first_project/screens/home_screen.dart';
+import 'package:first_project/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_project/providers/cart_provider.dart';
@@ -159,8 +160,14 @@ class OrderSuccessScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   try {
-                    final rewards = Provider.of<RewardsProvider>(context, listen: false);
-                    final cart = Provider.of<CartProvider>(context, listen: false);
+                    final rewards = Provider.of<RewardsProvider>(
+                      context,
+                      listen: false,
+                    );
+                    final cart = Provider.of<CartProvider>(
+                      context,
+                      listen: false,
+                    );
 
                     // 1. Deduct points used for discount
                     if (cart.appliedPoints > 0) {
@@ -187,6 +194,8 @@ class OrderSuccessScreen extends StatelessWidget {
                         time: "Just now",
                       ),
                     );
+
+                    showTopSnackBar(context, "Order Placed Successfully! 🛒");
 
                     // 3. Start delivery timer
                     Provider.of<OrderProvider>(

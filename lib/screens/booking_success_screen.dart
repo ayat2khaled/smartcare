@@ -5,6 +5,7 @@ import 'package:first_project/models/notification_model.dart';
 import 'package:first_project/providers/rewards_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
 import 'package:first_project/providers/notification_provider.dart';
+import 'package:first_project/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -214,14 +215,20 @@ class BookingSuccessScreen extends StatelessWidget {
               const SizedBox(height: 35),
               ElevatedButton(
                 onPressed: () {
-                  final rewards = Provider.of<RewardsProvider>(context, listen: false);
+                  final rewards = Provider.of<RewardsProvider>(
+                    context,
+                    listen: false,
+                  );
                   if (appliedPoints > 0) {
                     rewards.deductPoints(appliedPoints);
                   }
                   rewards.addPoints(50);
 
                   // Always record the booking first
-                  final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+                  final bookingProvider = Provider.of<BookingProvider>(
+                    context,
+                    listen: false,
+                  );
                   bookingProvider.addBooking(
                     Booking(
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -234,20 +241,28 @@ class BookingSuccessScreen extends StatelessWidget {
                       appliedPoints: appliedPoints,
                       availableDays: doctor.availableDays,
                       schedule: doctor.schedule,
-                    )
+                    ),
                   );
 
                   // Send reminder notification if enabled
                   if (remindMe) {
                     try {
-                      final notifProvider = Provider.of<NotificationProvider>(context, listen: false);
+                      final notifProvider = Provider.of<NotificationProvider>(
+                        context,
+                        listen: false,
+                      );
                       notifProvider.addNotification(
                         NotificationModel(
-                          title: "Your appointment with ${doctor.name} is successfully confirmed.",
+                          title:
+                              "Your appointment with ${doctor.name} is successfully confirmed.",
                           subtitle: "Date: $formattedDate at $time",
                           userImage: doctor.image,
                           time: "Just now",
-                        )
+                        ),
+                      );
+                      showTopSnackBar(
+                        context,
+                        "Your appointment with ${doctor.name} is successfully confirmed.",
                       );
                     } catch (e) {
                       debugPrint("Error sending reminder notification: $e");

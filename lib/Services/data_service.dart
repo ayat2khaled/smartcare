@@ -21,8 +21,6 @@ class DiseaseInfo {
 
 /// Service to fetch live health data & provide symptom matching
 class DataService {
-
-
   /// Local disease-symptom knowledge base for chatbot
   static const List<DiseaseInfo> diseaseKnowledgeBase = [
     DiseaseInfo(
@@ -274,7 +272,9 @@ class DataService {
   /// Fetch doctors directly from our custom local dataset
   static Future<List<DoctorModel>> fetchDoctors() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/doctors.json');
+      final String response = await rootBundle.loadString(
+        'assets/data/doctors.json',
+      );
       final data = json.decode(response);
       final doctorsList = data['doctors'] as List;
 
@@ -289,13 +289,29 @@ class DataService {
           reviews: doc['reviews'] ?? 0,
           image: doc['image'] ?? '',
           about: doc['about'] ?? '',
-          availableDays: (doc['availableDays'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
-          schedule: (doc['schedule'] as Map<String, dynamic>?)?.map(
-            (key, value) => MapEntry(key, (value as List<dynamic>).map((e) => e.toString()).toList()),
-          ) ?? {},
-          packagePrices: (doc['packagePrices'] as Map<String, dynamic>?)?.map(
-            (key, value) => MapEntry(key, (value as num).toInt()),
-          ) ?? {'Messaging': 20, 'Voice Call': 40, 'Video Call': 60, 'In Person': 80},
+          availableDays:
+              (doc['availableDays'] as List<dynamic>?)
+                  ?.map((e) => e.toString())
+                  .toList() ??
+              [],
+          schedule:
+              (doc['schedule'] as Map<String, dynamic>?)?.map(
+                (key, value) => MapEntry(
+                  key,
+                  (value as List<dynamic>).map((e) => e.toString()).toList(),
+                ),
+              ) ??
+              {},
+          packagePrices:
+              (doc['packagePrices'] as Map<String, dynamic>?)?.map(
+                (key, value) => MapEntry(key, (value as num).toInt()),
+              ) ??
+              {
+                'Messaging': 20,
+                'Voice Call': 40,
+                'Video Call': 60,
+                'In Person': 80,
+              },
         );
       }).toList();
     } catch (_) {}
@@ -305,18 +321,18 @@ class DataService {
   /// Fetch hospitals from local JSON asset
   static Future<List<Hospital>> fetchHospitals() async {
     try {
-      final String jsonString =
-          await rootBundle.loadString('assets/data/hospitals.json');
+      final String jsonString = await rootBundle.loadString(
+        'assets/data/hospitals.json',
+      );
       final data = json.decode(jsonString);
       final hospitalsList = data['hospitals'] as List;
 
       return hospitalsList.map((h) {
         final double distKm = (h['distance_km'] as num).toDouble();
         final double rating = (h['rating'] as num).toDouble();
-        final Map<String, dynamic>? workingHours =
-            h['working_hours'] != null
-                ? Map<String, dynamic>.from(h['working_hours'])
-                : null;
+        final Map<String, dynamic>? workingHours = h['working_hours'] != null
+            ? Map<String, dynamic>.from(h['working_hours'])
+            : null;
 
         return Hospital(
           name: h['name'] ?? '',
@@ -337,7 +353,9 @@ class DataService {
 
   static Future<List<Product>> fetchPharmacyProducts() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/products.json');
+      final String response = await rootBundle.loadString(
+        'assets/data/products.json',
+      );
       final data = json.decode(response);
       final productsList = data['products'] as List;
 

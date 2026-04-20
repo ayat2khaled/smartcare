@@ -1,11 +1,11 @@
 name: first_project
 description: "SmartCare - A Flutter healthcare application."
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.1
+  sdk: ^3.10.1
 
 dependencies:
   flutter:

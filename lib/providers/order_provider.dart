@@ -33,7 +33,10 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  void startDeliveryTimer(String orderId, NotificationProvider notificationProvider) {
+  void startDeliveryTimer(
+    String orderId,
+    NotificationProvider notificationProvider,
+  ) {
     Future.delayed(const Duration(seconds: 15), () {
       final index = _orders.indexWhere((o) => o.orderId == orderId);
       if (index != -1 && _orders[index].status == "Pending") {

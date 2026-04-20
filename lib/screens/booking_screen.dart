@@ -4,6 +4,7 @@ import 'package:first_project/models/notification_model.dart';
 import 'package:first_project/providers/booking_provider.dart';
 import 'package:first_project/providers/notification_provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
+import 'package:first_project/utils/top_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -36,19 +37,25 @@ class _BookingScreenState extends State<BookingScreen> {
             icon: Icon(Icons.arrow_back, color: textColor),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text("My Booking", style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+          title: Text(
+            "My Booking",
+            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Icon(Icons.search, color: textColor),
-            )
+            ),
           ],
           bottom: TabBar(
             labelColor: primaryColor,
             unselectedLabelColor: subTextColor,
             indicatorColor: primaryColor,
-            labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            labelStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
             unselectedLabelStyle: const TextStyle(fontSize: 14),
             tabs: const [
               Tab(text: "Upcoming"),
@@ -59,9 +66,13 @@ class _BookingScreenState extends State<BookingScreen> {
         body: Consumer<BookingProvider>(
           builder: (context, provider, child) {
             final allBookings = provider.bookings;
-            final upcoming = allBookings.where((b) => b.status == "Upcoming").toList();
+            final upcoming = allBookings
+                .where((b) => b.status == "Upcoming")
+                .toList();
             //final completed = allBookings.where((b) => b.status == "Completed").toList();
-            final cancelled = allBookings.where((b) => b.status == "Cancelled").toList();
+            final cancelled = allBookings
+                .where((b) => b.status == "Cancelled")
+                .toList();
 
             return TabBarView(
               children: [
@@ -75,9 +86,17 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Widget _bookingList(List<Booking> list, String leftButton, String rightButton, bool showSwitch, bool hideLeft) {
+  Widget _bookingList(
+    List<Booking> list,
+    String leftButton,
+    String rightButton,
+    bool showSwitch,
+    bool hideLeft,
+  ) {
     if (list.isEmpty) {
-      return const Center(child: Text("No bookings found.", style: TextStyle(fontSize: 16)));
+      return const Center(
+        child: Text("No bookings found.", style: TextStyle(fontSize: 16)),
+      );
     }
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -85,43 +104,73 @@ class _BookingScreenState extends State<BookingScreen> {
       itemBuilder: (context, index) {
         final booking = list[index];
         return BookingCard(
-          date: booking.date, name: booking.name, hospital: booking.hospital, image: booking.image,
-          experience: booking.experience, rating: booking.rating, leftButton: leftButton,
-          rightButton: rightButton, showSwitch: showSwitch, switchValue: true,
+          date: booking.date,
+          name: booking.name,
+          hospital: booking.hospital,
+          image: booking.image,
+          experience: booking.experience,
+          rating: booking.rating,
+          leftButton: leftButton,
+          rightButton: rightButton,
+          showSwitch: showSwitch,
+          switchValue: true,
           onSwitchChanged: (v) {},
           onLeftButtonPressed: () {
             if (leftButton == "Cancel") {
-               showDialog(
-                 context: context,
-                 builder: (ctx) => AlertDialog(
-                   title: const Text("Cancel Booking"),
-                   content: Text("Are you sure you want to cancel this booking? This will deduct 50 rewards from your balance${booking.appliedPoints > 0 ? ', and restore your ${booking.appliedPoints} applied points' : ''}."),
-                   actions: [
-                     TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("No")),
-                     ElevatedButton(
-                       onPressed: () {
-                         final rewards = Provider.of<RewardsProvider>(context, listen: false);
-                         rewards.deductPoints(50);
-                         if (booking.appliedPoints > 0) {
-                           rewards.addPoints(booking.appliedPoints);
-                         }
-                         Provider.of<BookingProvider>(context, listen: false).cancelBooking(booking.id);
-                         Provider.of<NotificationProvider>(context, listen: false).addNotification(
-                           NotificationModel(
-                             title: "Booking Cancelled ❌",
-                             subtitle: "Your appointment with ${booking.name} on ${booking.date} has been cancelled.",
-                             userImage: booking.image,
-                             time: "Just now",
-                           ),
-                         );
-                         Navigator.pop(ctx);
-                       },
-                       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFE53935)),
-                       child: const Text("Yes, Cancel", style: TextStyle(color: Colors.white)),
-                     ),
-                   ],
-                 ),
-               );
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text("Cancel Booking"),
+                  content: Text(
+                    "Are you sure you want to cancel this booking? This will deduct 50 rewards from your balance${booking.appliedPoints > 0 ? ', and restore your ${booking.appliedPoints} applied points' : ''}.",
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      child: const Text("No"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final rewards = Provider.of<RewardsProvider>(
+                          context,
+                          listen: false,
+                        );
+                        rewards.deductPoints(50);
+                        if (booking.appliedPoints > 0) {
+                          rewards.addPoints(booking.appliedPoints);
+                        }
+                        Provider.of<BookingProvider>(
+                          context,
+                          listen: false,
+                        ).cancelBooking(booking.id);
+                        Provider.of<NotificationProvider>(
+                          context,
+                          listen: false,
+                        ).addNotification(
+                          NotificationModel(
+                            title: "Booking Cancelled ❌",
+                            subtitle:
+                                "Your appointment with ${booking.name} on ${booking.date} has been cancelled.",
+                            userImage: booking.image,
+                            time: "Just now",
+                          ),
+                        );
+
+                        showTopSnackBar(ctx, "Booking Cancelled ❌");
+
+                        Navigator.pop(ctx);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFE53935),
+                      ),
+                      child: const Text(
+                        "Yes, Cancel",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
           },
           onRightButtonPressed: () {
@@ -166,11 +215,14 @@ class _BookingScreenState extends State<BookingScreen> {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (ctx, setDialogState) {
-            final availableTimes = booking.schedule[_getDayName(selectedDate)] ?? [];
+            final availableTimes =
+                booking.schedule[_getDayName(selectedDate)] ?? [];
 
             return AlertDialog(
               backgroundColor: bgColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               title: Text(
                 "Reschedule Appointment",
                 style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
@@ -181,7 +233,14 @@ class _BookingScreenState extends State<BookingScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Select Date", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor)),
+                    Text(
+                      "Select Date",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 75,
@@ -190,10 +249,15 @@ class _BookingScreenState extends State<BookingScreen> {
                         itemCount: 14,
                         separatorBuilder: (_, i) => const SizedBox(width: 8),
                         itemBuilder: (context, index) {
-                          final date = DateTime.now().add(Duration(days: index));
+                          final date = DateTime.now().add(
+                            Duration(days: index),
+                          );
                           final dayName = _getDayName(date);
-                          final isDisabled = !booking.availableDays.contains(dayName);
-                          final isSelected = selectedDate.year == date.year &&
+                          final isDisabled = !booking.availableDays.contains(
+                            dayName,
+                          );
+                          final isSelected =
+                              selectedDate.year == date.year &&
                               selectedDate.month == date.month &&
                               selectedDate.day == date.day;
 
@@ -203,18 +267,23 @@ class _BookingScreenState extends State<BookingScreen> {
                                 : () {
                                     setDialogState(() {
                                       selectedDate = date;
-                                      final newTimes = booking.schedule[dayName] ?? [];
-                                      selectedTime = newTimes.isNotEmpty ? newTimes.first : "";
+                                      final newTimes =
+                                          booking.schedule[dayName] ?? [];
+                                      selectedTime = newTimes.isNotEmpty
+                                          ? newTimes.first
+                                          : "";
                                     });
                                   },
                             child: Container(
                               width: 55,
                               decoration: BoxDecoration(
                                 color: isDisabled
-                                    ? (isDark ? const Color(0xFF1E293B) : Colors.grey.shade200)
+                                    ? (isDark
+                                          ? const Color(0xFF1E293B)
+                                          : Colors.grey.shade200)
                                     : isSelected
-                                        ? primaryColor
-                                        : cardColor,
+                                    ? primaryColor
+                                    : cardColor,
                                 borderRadius: BorderRadius.circular(12),
                                 border: isSelected && !isDisabled
                                     ? Border.all(color: primaryColor, width: 2)
@@ -230,8 +299,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                       color: isDisabled
                                           ? Colors.grey
                                           : isSelected
-                                              ? Colors.white
-                                              : textColor,
+                                          ? Colors.white
+                                          : textColor,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -243,8 +312,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                       color: isDisabled
                                           ? Colors.grey
                                           : isSelected
-                                              ? Colors.white
-                                              : textColor,
+                                          ? Colors.white
+                                          : textColor,
                                     ),
                                   ),
                                 ],
@@ -255,10 +324,20 @@ class _BookingScreenState extends State<BookingScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text("Select Time", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor)),
+                    Text(
+                      "Select Time",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     availableTimes.isEmpty
-                        ? Text("No available times", style: TextStyle(color: Colors.grey.shade500))
+                        ? Text(
+                            "No available times",
+                            style: TextStyle(color: Colors.grey.shade500),
+                          )
                         : Wrap(
                             spacing: 8,
                             runSpacing: 8,
@@ -271,19 +350,31 @@ class _BookingScreenState extends State<BookingScreen> {
                                   });
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 10,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: isSelected ? primaryColor : cardColor,
+                                    color: isSelected
+                                        ? primaryColor
+                                        : cardColor,
                                     borderRadius: BorderRadius.circular(10),
                                     border: isSelected
-                                        ? Border.all(color: primaryColor, width: 2)
+                                        ? Border.all(
+                                            color: primaryColor,
+                                            width: 2,
+                                          )
                                         : null,
                                   ),
                                   child: Text(
                                     time,
                                     style: TextStyle(
-                                      color: isSelected ? Colors.white : textColor,
-                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                      color: isSelected
+                                          ? Colors.white
+                                          : textColor,
+                                      fontWeight: isSelected
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
                                       fontSize: 13,
                                     ),
                                   ),
@@ -303,20 +394,47 @@ class _BookingScreenState extends State<BookingScreen> {
                   onPressed: selectedTime.isEmpty
                       ? null
                       : () {
-                          final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                          final dateStr = "${months[selectedDate.month - 1]} ${selectedDate.day}, ${selectedDate.year}";
-                          Provider.of<BookingProvider>(context, listen: false)
-                              .rescheduleBooking(booking.id, "$dateStr - $selectedTime");
-                          Navigator.pop(ctx);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Rescheduled to $dateStr at $selectedTime")),
+                          final months = [
+                            'Jan',
+                            'Feb',
+                            'Mar',
+                            'Apr',
+                            'May',
+                            'Jun',
+                            'Jul',
+                            'Aug',
+                            'Sep',
+                            'Oct',
+                            'Nov',
+                            'Dec',
+                          ];
+                          final dateStr =
+                              "${months[selectedDate.month - 1]} ${selectedDate.day}, ${selectedDate.year}";
+                          Provider.of<BookingProvider>(
+                            context,
+                            listen: false,
+                          ).rescheduleBooking(
+                            booking.id,
+                            "$dateStr - $selectedTime",
                           );
+
+                          showTopSnackBar(
+                            ctx,
+                            "Rescheduled to $dateStr at $selectedTime",
+                          );
+
+                          Navigator.pop(ctx);
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  child: const Text("Confirm", style: TextStyle(color: Colors.white)),
+                  child: const Text(
+                    "Confirm",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             );
