@@ -1,0 +1,46 @@
+name: first_project
+description: "SmartCare - A Flutter healthcare application."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^6.1.2
+  http: ^1.2.1
+
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.5.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/data/doctors.json
+    - assets/data/hospitals.json
+    - assets/data/products.json
+    - images/WhatsApp Image 2026-03-05 at 2.47.18 AM.jpeg
+    - images/WhatsApp Image 2026-03-05 at 3.51.43 AM.jpeg
+    - images/WhatsApp Image 2026-03-07 at 1.15.16 AM.jpeg
+    - images/WhatsApp Image 2026-03-08 at 2.15.02 AM.jpeg
+    - images/WhatsApp Image 2026-03-08 at 2.50.51 AM.jpeg
+    - images/WhatsApp Image 2026-03-09 at 11.54.11 PM.jpeg
+    - images/WhatsApp Image 2026-03-10 at 12.47.33 AM.jpeg
+    - images/WhatsApp Image 2026-03-10 at 2.52.53 AM.jpeg
+    - images/WhatsApp Image 2026-03-10 at 2.57.26 AM.jpeg
+    - images/VitaLiver™.jpg
+    - images/للطب البيطري البديل مساحة مع V-Buzz 🌿🐾.jpg
+    - images/20 Amazing Benefits of Helichrysum Oil & How to Use It.jpg
+    - images/Carlos Perez.jpg
+    - images/WhatsApp Image 2026-04-06 at 1.32.56 AM.jpeg

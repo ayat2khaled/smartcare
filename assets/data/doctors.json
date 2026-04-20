@@ -1,0 +1,1063 @@
+{
+  "doctors": [
+    {
+      "name": "Dr. Ahmed Hassan",
+      "specialization": "Cardio",
+      "location": "Cairo",
+      "rating": 4.8,
+      "image": "https://i.pinimg.com/736x/19/d8/a4/19d8a47c6aeebc2de8e14913eead1264.jpg",
+      "about": "Experienced cardiologist with over 10 years of expertise in diagnosing and treating heart diseases, specializing in interventional cardiology and the management of heart failure and arrhythmias.",
+      "availableDays": [
+        "Mon",
+        "Wed",
+        "Sat"
+      ],
+      "experience": 4,
+      "patients": 2342,
+      "reviews": 228,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "11:00 AM",
+          "11:30 AM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:30 AM",
+          "04:00 PM"
+        ],
+        "Sat": [
+          "09:00 AM",
+          "10:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "05:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 35,
+        "Voice Call": 51,
+        "Video Call": 71,
+        "In Person": 123
+      }
+    },
+    {
+      "name": "Dr. Sara Mohamed",
+      "specialization": "Dentist",
+      "location": "Alexandria",
+      "rating": 4.6,
+      "image": "https://images.pexels.com/photos/3779709/pexels-photo-3779709.jpeg",
+      "about": "Professional dentist specialized in cosmetic dentistry and oral health care, offering teeth whitening, veneers, and preventive treatments in a comfortable and patient-friendly environment.",
+      "availableDays": [
+        "Mon",
+        "Thu",
+        "Fri"
+      ],
+      "experience": 16,
+      "patients": 2333,
+      "reviews": 270,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Thu": [
+          "09:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM"
+        ],
+        "Fri": [
+          "10:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "02:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 21,
+        "Voice Call": 34,
+        "Video Call": 58,
+        "In Person": 79
+      }
+    },
+    {
+      "name": "Dr. Omar Khaled",
+      "specialization": "Surgeon",
+      "location": "Giza",
+      "rating": 4.9,
+      "image": "https://i.pinimg.com/1200x/6c/01/6c/6c016cf7ab4b3d9aa3971ac6c881a56b.jpg",
+      "about": "Highly skilled surgeon with extensive experience in advanced surgical procedures, proficient in both open and laparoscopic techniques across abdominal and oncological surgeries.",
+      "availableDays": [
+        "Tue",
+        "Fri",
+        "Sun"
+      ],
+      "experience": 4,
+      "patients": 3255,
+      "reviews": 1148,
+      "schedule": {
+        "Tue": [
+          "10:00 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "04:00 PM"
+        ],
+        "Fri": [
+          "11:30 AM",
+          "01:00 PM",
+          "05:00 PM"
+        ],
+        "Sun": [
+          "10:00 AM",
+          "03:00 PM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 15,
+        "Voice Call": 29,
+        "Video Call": 57,
+        "In Person": 98
+      }
+    },
+    {
+      "name": "Dr. Nour Ali",
+      "specialization": "Radiologist",
+      "location": "Mansoura",
+      "rating": 4.7,
+      "image": "https://images.pexels.com/photos/8942991/pexels-photo-8942991.jpeg",
+      "about": "Radiologist specialized in MRI, CT scans, and diagnostic imaging, known for meticulous reporting and early detection of abnormalities to support accurate clinical decisions.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Sat",
+        "Sun"
+      ],
+      "experience": 20,
+      "patients": 2871,
+      "reviews": 747,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Tue": [
+          "09:00 AM",
+          "10:00 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "05:00 PM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM"
+        ],
+        "Sat": [
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM"
+        ],
+        "Sun": [
+          "10:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 44,
+        "Voice Call": 55,
+        "Video Call": 93,
+        "In Person": 125
+      }
+    },
+    {
+      "name": "Dr. Mostafa Adel",
+      "specialization": "Dentist",
+      "location": "Tanta",
+      "rating": 4.5,
+      "image": "https://i.pinimg.com/1200x/0d/df/ca/0ddfca060214a0f892650c779db085a4.jpg",
+      "about": "Specialist in treating hypertension and chronic heart conditions, combining medication management with lifestyle counseling for long-term cardiovascular health.",
+      "availableDays": [
+        "Mon",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "experience": 4,
+      "patients": 1457,
+      "reviews": 326,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "03:00 PM",
+          "05:00 PM"
+        ],
+        "Wed": [
+          "09:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "04:00 PM"
+        ],
+        "Thu": [
+          "09:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "02:00 PM"
+        ],
+        "Fri": [
+          "11:00 AM",
+          "01:00 PM",
+          "05:00 PM"
+        ],
+        "Sat": [
+          "10:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 22,
+        "Voice Call": 38,
+        "Video Call": 71,
+        "In Person": 109
+      }
+    },
+    {
+      "name": "Dr. Huda Samir",
+      "specialization": "Cardio",
+      "location": "Cairo",
+      "rating": 4.4,
+      "image": "https://tse3.mm.bing.net/th/id/OIP.tw_EjPJnWzgOzORLMuYOMgHaE5?rs=1&pid=ImgDetMain&o=7&rm=3",
+      "about": "Dentist experienced in pediatric care and smile design, offering composite bonding and gum contouring alongside a warm approach that puts patients of all ages at ease.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Fri",
+        "Sun"
+      ],
+      "experience": 13,
+      "patients": 4745,
+      "reviews": 733,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Tue": [
+          "10:00 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "10:30 AM",
+          "04:00 PM"
+        ],
+        "Fri": [
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "05:00 PM"
+        ],
+        "Sun": [
+          "09:00 AM",
+          "10:30 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 23,
+        "Voice Call": 38,
+        "Video Call": 65,
+        "In Person": 116
+      }
+    },
+    {
+      "name": "Dr. Karim Nabil",
+      "specialization": "Dentist",
+      "location": "Alexandria",
+      "rating": 4.8,
+      "image": "https://i.pinimg.com/736x/b8/35/57/b835576acca81f0fdf069a70b0a69977.jpg",
+      "about": "General surgeon specialized in emergency and delicate operations, excelling in critical trauma cases and complex abdominal procedures with consistently outstanding outcomes.",
+      "availableDays": [
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+      ],
+      "experience": 25,
+      "patients": 2158,
+      "reviews": 385,
+      "schedule": {
+        "Tue": [
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "05:00 PM"
+        ],
+        "Wed": [
+          "10:30 AM",
+          "11:30 AM",
+          "04:00 PM"
+        ],
+        "Thu": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "05:00 PM"
+        ],
+        "Fri": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Sat": [
+          "10:00 AM",
+          "11:00 AM",
+          "04:00 PM"
+        ],
+        "Sun": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 23,
+        "Voice Call": 35,
+        "Video Call": 67,
+        "In Person": 115
+      }
+    },
+    {
+      "name": "Dr. Reem Nabil",
+      "specialization": "Dentist",
+      "location": "Giza",
+      "rating": 4.6,
+      "image": "https://images.pexels.com/photos/3845806/pexels-photo-3845806.jpeg",
+      "about": "Dentist specializing in oral health and cosmetic procedures, with a strong emphasis on preventive care and enhancements like laminates and teeth contouring.",
+      "availableDays": [
+        "Tue",
+        "Wed",
+        "Thu",
+        "Sat"
+      ],
+      "experience": 3,
+      "patients": 3723,
+      "reviews": 229,
+      "schedule": {
+        "Tue": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Wed": [
+          "09:00 AM",
+          "10:00 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Thu": [
+          "09:00 AM",
+          "11:00 AM",
+          "01:00 PM"
+        ],
+        "Sat": [
+          "09:00 AM",
+          "10:00 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 21,
+        "Voice Call": 40,
+        "Video Call": 61,
+        "In Person": 76
+      }
+    },
+    {
+      "name": "Dr. Laila Hassan",
+      "specialization": "Surgeon",
+      "location": "Cairo",
+      "rating": 4.6,
+      "image": "https://media.istockphoto.com/photos/portrait-of-beautiful-female-doctor-surgeon-putting-on-medical-gloves-picture-id1402832029?k=20&m=1402832029&s=170667a&w=0&h=Vkhuo4ums09efVIWOq1Nwcv50xAt17YTruapIEzwbDY=",
+      "about": "Radiologist experienced in modern imaging technologies including X-ray, ultrasound, and PET scanning, providing comprehensive reports that support multidisciplinary treatment planning.",
+      "availableDays": [
+        "Tue",
+        "Wed",
+        "Fri"
+      ],
+      "experience": 22,
+      "patients": 3243,
+      "reviews": 193,
+      "schedule": {
+        "Tue": [
+          "09:00 AM",
+          "10:00 AM",
+          "01:00 PM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Fri": [
+          "09:00 AM",
+          "11:00 AM",
+          "02:00 PM",
+          "03:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 43,
+        "Voice Call": 63,
+        "Video Call": 75,
+        "In Person": 123
+      }
+    },
+    {
+      "name": "Dr. Mahmoud Yasser",
+      "specialization": "Dentist",
+      "location": "Zagazig",
+      "rating": 4.7,
+      "image": "https://i.pinimg.com/1200x/60/cd/f2/60cdf2462b52ec2be2daf2d061d01cc7.jpg",
+      "about": "Cardiologist focused on preventive heart care and lifestyle management, running cardiac wellness programs that integrate nutrition and stress management to reduce risk of heart disease.",
+      "availableDays": [
+        "Tue",
+        "Wed",
+        "Fri",
+        "Sat"
+      ],
+      "experience": 3,
+      "patients": 2734,
+      "reviews": 968,
+      "schedule": {
+        "Tue": [
+          "01:00 PM",
+          "02:00 PM",
+          "05:00 PM"
+        ],
+        "Wed": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Fri": [
+          "11:00 AM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Sat": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 30,
+        "Voice Call": 46,
+        "Video Call": 61,
+        "In Person": 97
+      }
+    },
+    {
+      "name": "Dr. Dina Fathy",
+      "specialization": "Surgeon",
+      "location": "Mansoura",
+      "rating": 4.5,
+      "image": "https://www.bing.com/images/search?view=detailV2&ccid=MnGm3ced&id=A870387944479DA5AB88677B5C3337CBF14B1D37&thid=OIP.MnGm3ced8T40tNPpr_tBDQHaEQ&mediaurl=https%3a%2f%2fhealthydebate.ca%2fwp-content%2fuploads%2f2018%2f10%2fFemaleSurgeon2Cropped5.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.3271a6ddc79df13e34b4d3e9affb410d%3frik%3dNx1L8cs3M1x7Zw%26pid%3dImgRaw%26r%3d0&exph=921&expw=1600&q=photo+doctor+surgeonfemale&FORM=IRPRST&ck=1A99F34AA62A098C713AFF353E74F879&selectedIndex=23&itb=0",
+      "about": "Specialist in dental implants and cosmetic treatments, combining artistic precision with advanced implantology to restore missing teeth and deliver natural-looking, confident smiles.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Sun"
+      ],
+      "experience": 6,
+      "patients": 509,
+      "reviews": 239,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Tue": [
+          "09:00 AM",
+          "10:00 AM",
+          "04:00 PM"
+        ],
+        "Sun": [
+          "10:30 AM",
+          "11:00 AM",
+          "02:00 PM",
+          "03:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 45,
+        "Voice Call": 55,
+        "Video Call": 88,
+        "In Person": 108
+      }
+    },
+    {
+      "name": "Dr. Tarek Hossam",
+      "specialization": "Cardio",
+      "location": "Cairo",
+      "rating": 4.9,
+      "image": "https://www.bing.com/images/search?view=detailV2&ccid=hDAPaaPd&id=4E0886A81CB720E6DF67F017F31FF4D242794727&thid=OIP.hDAPaaPdW6Ec-OtQs6TiLAHaE8&mediaurl=https%3a%2f%2fpng.pngtree.com%2fbackground%2f20230313%2foriginal%2fpngtree-aged-male-doctor-cardiologist-with-heart-model-vector-picture-image_2130509.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.84300f69a3dd5ba11cf8eb50b3a4e22c%3frik%3dJ0d5QtL0H%252fMX8A%26pid%3dImgRaw%26r%3d0&exph=802&expw=1200&q=photo+doctor+cardio&FORM=IRPRST&ck=2A5E8837E0A6A0B0865DC235FE816364&selectedIndex=38&itb=0",
+      "about": "Expert surgeon with years of experience in complex procedures, with expertise spanning colorectal, hepatobiliary, and minimally invasive robotic surgeries.",
+      "availableDays": [
+        "Mon",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+      ],
+      "experience": 24,
+      "patients": 1314,
+      "reviews": 308,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "02:00 PM"
+        ],
+        "Wed": [
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM"
+        ],
+        "Thu": [
+          "10:00 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Fri": [
+          "09:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "04:00 PM"
+        ],
+        "Sat": [
+          "09:00 AM",
+          "10:30 AM",
+          "03:00 PM"
+        ],
+        "Sun": [
+          "10:00 AM",
+          "10:30 AM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 33,
+        "Voice Call": 51,
+        "Video Call": 65,
+        "In Person": 112
+      }
+    },
+    {
+      "name": "Dr. Rana Mostafa",
+      "specialization": "Radiologist",
+      "location": "Giza",
+      "rating": 4.6,
+      "image": "https://thumbs.dreamstime.com/b/young-female-doctor-radiologist-working-clinic-young-female-doctor-radiologist-working-clinic-332189425.jpg",
+      "about": "Radiologist experienced in MRI and CT imaging, with particular expertise in musculoskeletal and neurological cases and a strong record in second-opinion diagnostics.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Fri",
+        "Sun"
+      ],
+      "experience": 3,
+      "patients": 2540,
+      "reviews": 931,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "11:00 AM",
+          "05:00 PM"
+        ],
+        "Tue": [
+          "09:00 AM",
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Fri": [
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "04:00 PM"
+        ],
+        "Sun": [
+          "09:00 AM",
+          "10:00 AM",
+          "03:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 43,
+        "Voice Call": 56,
+        "Video Call": 92,
+        "In Person": 122
+      }
+    },
+    {
+      "name": "Dr. Youssef Adel",
+      "specialization": "Radiologist",
+      "location": "Alexandria",
+      "rating": 4.8,
+      "image": "https://i.pinimg.com/1200x/8e/3d/47/8e3d47145b514a7ec2fcab9f08141eae.jpg",
+      "about": "Specialist in heart rhythm disorders and cardiovascular care, with expertise in electrophysiology studies and catheter ablation for atrial fibrillation and arrhythmias.",
+      "availableDays": [
+        "Wed",
+        "Thu",
+        "Fri"
+      ],
+      "experience": 21,
+      "patients": 4056,
+      "reviews": 593,
+      "schedule": {
+        "Wed": [
+          "11:00 AM",
+          "11:30 AM",
+          "04:00 PM"
+        ],
+        "Thu": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "01:00 PM"
+        ],
+        "Fri": [
+          "10:30 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 13,
+        "Voice Call": 28,
+        "Video Call": 47,
+        "In Person": 76
+      }
+    },
+    {
+      "name": "Dr. Salma Ashraf",
+      "specialization": "Surgeon",
+      "location": "Tanta",
+      "rating": 4.7,
+      "image": "https://img.freepik.com/premium-photo/portrait-beautiful-female-doctor-surgeon-putting-medical-mask-standing-operation-room-surgeon-modern-operating-room_657921-754.jpg",
+      "about": "Cosmetic dentist focused on smile aesthetics, using digital smile design, porcelain veneers, and Invisalign to craft personalized transformations for every patient.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Fri"
+      ],
+      "experience": 18,
+      "patients": 451,
+      "reviews": 674,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Tue": [
+          "10:00 AM",
+          "10:30 AM",
+          "04:00 PM"
+        ],
+        "Fri": [
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "03:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 20,
+        "Voice Call": 37,
+        "Video Call": 69,
+        "In Person": 81
+      }
+    },
+    {
+      "name": "Dr. Hany Saeed",
+      "specialization": "Dentist",
+      "location": "Mansoura",
+      "rating": 4.8,
+      "image": "https://www.bing.com/images/search?view=detailV2&ccid=Y%2b%2bwpmNS&id=FF3AC6E100B4704E59AE78CBB33A961351E17AA5&thid=OIP.Y--wpmNSDkCBwazDEGgBAQHaDt&mediaurl=https%3a%2f%2fimg.freepik.com%2fpremium-photo%2fdentist-doctor_76964-31875.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.63efb0a663520e4081c1acc310680101%3frik%3dpXrhUROWOrPLeA%26pid%3dImgRaw%26r%3d0&exph=313&expw=626&q=photo+doctor+dentist&FORM=IRPRST&ck=A22904667D029043A5C7203658E97D17&selectedIndex=5&itb=0",
+      "about": "Experienced surgeon in trauma and emergency care, known for rapid decision-making and technical dexterity that have saved countless lives in critical conditions.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sun"
+      ],
+      "experience": 13,
+      "patients": 4423,
+      "reviews": 1039,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Tue": [
+          "09:00 AM",
+          "11:30 AM",
+          "02:00 PM"
+        ],
+        "Wed": [
+          "10:30 AM",
+          "11:30 AM",
+          "01:00 PM"
+        ],
+        "Thu": [
+          "11:30 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Fri": [
+          "10:00 AM",
+          "10:30 AM",
+          "05:00 PM"
+        ],
+        "Sun": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "05:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 42,
+        "Voice Call": 62,
+        "Video Call": 77,
+        "In Person": 94
+      }
+    },
+    {
+      "name": "Dr. Mona Khalil",
+      "specialization": "Cardio",
+      "location": "Alexandria",
+      "rating": 4.7,
+      "image": "https://tse2.mm.bing.net/th/id/OIP.KV3-nNGqjVkUmlXf2FRpqAHaEw?rs=1&pid=ImgDetMain&o=7&rm=3",
+      "about": "Expert in diagnostic imaging and detailed reporting, with extensive experience in breast and oncology radiology supporting early cancer detection programs.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Sat"
+      ],
+      "experience": 9,
+      "patients": 4467,
+      "reviews": 1206,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "10:00 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "04:00 PM"
+        ],
+        "Tue": [
+          "01:00 PM",
+          "02:00 PM",
+          "04:00 PM"
+        ],
+        "Wed": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "02:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Sat": [
+          "10:30 AM",
+          "11:00 AM",
+          "01:00 PM",
+          "02:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 17,
+        "Voice Call": 27,
+        "Video Call": 52,
+        "In Person": 97
+      }
+    },
+    {
+      "name": "Dr. Khaled Samy",
+      "specialization": "Cardio",
+      "location": "Cairo",
+      "rating": 4.9,
+      "image": "https://i.pinimg.com/1200x/5d/79/b7/5d79b78d97c6b4bf59b06c94426f9064.jpg",
+      "about": "Senior cardiologist with deep experience in heart surgeries and patient care, having performed thousands of cardiac catheterizations and stenting procedures over a 20-year career.",
+      "availableDays": [
+        "Mon",
+        "Wed",
+        "Sun"
+      ],
+      "experience": 13,
+      "patients": 252,
+      "reviews": 865,
+      "schedule": {
+        "Mon": [
+          "09:00 AM",
+          "10:00 AM",
+          "02:00 PM",
+          "04:00 PM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "02:00 PM",
+          "03:00 PM",
+          "05:00 PM"
+        ],
+        "Sun": [
+          "09:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "02:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 36,
+        "Voice Call": 47,
+        "Video Call": 79,
+        "In Person": 126
+      }
+    },
+    {
+      "name": "Dr. Adel Fathy",
+      "specialization": "Surgeon",
+      "location": "Tanta",
+      "rating": 4.7,
+      "image": "https://i.pinimg.com/736x/2f/b2/9a/2fb29ae45e4cb12150e01ebbafa5abfa.jpg",
+      "about": "Skilled surgeon focused on safe and precise operations, known for thorough preoperative planning and personalized care that minimizes risk and ensures smooth recovery.",
+      "availableDays": [
+        "Mon",
+        "Tue",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+      ],
+      "experience": 23,
+      "patients": 4350,
+      "reviews": 939,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Tue": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "03:00 PM",
+          "04:00 PM"
+        ],
+        "Thu": [
+          "09:00 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "05:00 PM"
+        ],
+        "Fri": [
+          "10:00 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "03:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Sat": [
+          "09:00 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Sun": [
+          "10:00 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "05:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 15,
+        "Voice Call": 27,
+        "Video Call": 54,
+        "In Person": 104
+      }
+    },
+    {
+      "name": "Dr. Nada Hassan",
+      "specialization": "Radiologist",
+      "location": "Cairo",
+      "rating": 4.8,
+      "image": "https://th.bing.com/th/id/OIP.1rYcqPtrANx8YdLBa0AsWAHaGA?w=224&h=182&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "about": "Radiologist with strong expertise in modern diagnostic tools, proficient in fluoroscopy and AI-assisted imaging to deliver high-quality insights that improve clinical outcomes.",
+      "availableDays": [
+        "Mon",
+        "Wed",
+        "Thu"
+      ],
+      "experience": 24,
+      "patients": 4561,
+      "reviews": 1357,
+      "schedule": {
+        "Mon": [
+          "10:00 AM",
+          "10:30 AM",
+          "01:00 PM",
+          "04:00 PM",
+          "05:00 PM"
+        ],
+        "Wed": [
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "01:00 PM",
+          "02:00 PM",
+          "03:00 PM"
+        ],
+        "Thu": [
+          "10:30 AM",
+          "11:30 AM",
+          "02:00 PM",
+          "05:00 PM"
+        ]
+      },
+      "packagePrices": {
+        "Messaging": 10,
+        "Voice Call": 26,
+        "Video Call": 50,
+        "In Person": 68
+      }
+    }
+  ]
+}

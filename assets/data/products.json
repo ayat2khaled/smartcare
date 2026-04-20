@@ -1,0 +1,118 @@
+{
+  "products": [
+    {
+      "name": "Panadol Extra",
+      "category": "Medicines",
+      "price": 35,
+      "rating": 4.8,
+      "reviews": 210,
+      "image": "https://th.bing.com/th/id/OIP.N7LgwZgiHKbnn1ynY2sdiAHaHa?w=194&h=194&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Brufen 400mg",
+      "category": "Medicines",
+      "price": 28,
+      "rating": 4.7,
+      "reviews": 180,
+      "image": "https://th.bing.com/th/id/OIP.7LzWHC-UlMTWECJsl_e2UwHaHa?w=177&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Augmentin 1g",
+      "category": "Medicines",
+      "price": 95,
+      "rating": 4.6,
+      "reviews": 150,
+      "image":"https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P00111_7.jpg"
+    },
+    {
+      "name": "Congestal Tablets",
+      "category": "Medicines",
+      "price": 32,
+      "rating": 4.5,
+      "reviews": 130,
+      "image": "https://th.bing.com/th/id/OIP.ZkBV-bkD5axEKoiuJhYhkQHaEA?w=325&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Ventolin Inhaler",
+      "category": "Medicines",
+      "price": 55,
+      "rating": 4.7,
+      "reviews": 160,
+      "image": "https://th.bing.com/th/id/OIP.8o9ihd_ge-M7QY2L5u18NgHaH5?w=185&h=197&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Cataflam 50mg",
+      "category": "Medicines",
+      "price": 40,
+      "rating": 4.6,
+      "reviews": 140,
+      "image": "https://th.bing.com/th/id/OIP.1BadlAbdmAwvJjZXVHDv2gHaHa?w=184&h=184&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+
+    {
+      "name": "Vitamin C 1000mg",
+      "category": "Vitamins",
+      "price": 60,
+      "rating": 4.8,
+      "reviews": 190,
+      "image": "https://th.bing.com/th/id/OIP.VHQ2vXlMe-DHnx-ImU9QDQHaHa?w=210&h=210&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Vitamin D3",
+      "category": "Vitamins",
+      "price": 75,
+      "rating": 4.7,
+      "reviews": 170,
+      "image": "https://th.bing.com/th/id/OIP.aKdVufyimfl31KUxu5BR-gHaHa?w=203&h=203&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Feroglobin Iron",
+      "category": "Vitamins",
+      "price": 85,
+      "rating": 4.6,
+      "reviews": 120,
+      "image": "https://th.bing.com/th/id/OIP.UK5hroQVD33hcULw9CA_zwHaIX?w=192&h=216&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Calcium Sandoz",
+      "category": "Vitamins",
+      "price": 90,
+      "rating": 4.7,
+      "reviews": 110,
+      "image": "https://th.bing.com/th/id/OIP.Pcks235MzErVDWgxIUhsvwHaHa?w=172&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+
+    {
+      "name": "Omega 3 Capsules",
+      "category": "Supplements",
+      "price": 120,
+      "rating": 4.8,
+      "reviews": 200,
+      "image": "https://globalcare.com.bd/public/uploads/all/ADrgJms6QyCmvYnqjUTkbokwnyicxD7LpCG18U8j.png"
+    },
+    {
+      "name": "Centrum Multivitamin",
+      "category": "Supplements",
+      "price": 150,
+      "rating": 4.9,
+      "reviews": 220,
+      "image": "https://th.bing.com/th/id/OIP.2VEvLPPgYVXpeiGOuhdrdQHaHa?w=204&h=204&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    },
+    {
+      "name": "Zincovit Tablets",
+      "category": "Supplements",
+      "price": 70,
+      "rating": 4.6,
+      "reviews": 100,
+      "image": "https://5.imimg.com/data5/SELLER/Default/2023/1/DU/RT/EL/148743120/img-20230116-170734-1000x1000.jpg"
+    },
+    {
+      "name": "Magnesium Plus",
+      "category": "Supplements",
+      "price": 95,
+      "rating": 4.5,
+      "reviews": 90,
+      "image": "https://th.bing.com/th/id/OIP.-oCk1NwC67hmbPGG-S5ejQAAAA?w=206&h=206&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+    }
+  ]
+}
