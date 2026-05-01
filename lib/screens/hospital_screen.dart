@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:first_project/components/hospital_action_button.dart';
 import 'package:first_project/components/hospital_doctor_card.dart';
 import 'package:first_project/services/data_service.dart';
@@ -37,6 +38,19 @@ class _HospitalScreenState extends State<HospitalScreen> {
 
   Future<void> _fetchDoctors() async {
     final docs = await DataService.fetchDoctors();
+    
+    // Create a deterministic subset based on the hospital name
+    if (widget.hospital != null && docs.isNotEmpty) {
+      final random = Random(widget.hospital!.name.hashCode);
+      docs.shuffle(random);
+      
+      // Determine a random number of doctors between 3 and 6
+      final numDoctors = 3 + random.nextInt(4);
+      if (docs.length > numDoctors) {
+        docs.length = numDoctors;
+      }
+    }
+    
     if (mounted) {
       setState(() {
         doctors = docs;

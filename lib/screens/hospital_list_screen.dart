@@ -23,7 +23,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   }
 
   Future<void> _fetchData() async {
-    final hosp = await DataService.fetchHospitals();
+    final hosp = await DataService.fetchNearbyHospitals();
     if (mounted) {
       setState(() {
         allHospitals = hosp;

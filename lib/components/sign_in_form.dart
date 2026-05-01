@@ -1,8 +1,13 @@
 import 'package:first_project/models/sign_in_model.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/screens/sign_up_screen.dart';
 import 'package:first_project/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:first_project/providers/rewards_provider.dart';
+import 'package:first_project/providers/order_provider.dart';
+import 'package:first_project/providers/booking_provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -15,6 +20,50 @@ class _SignInFormState extends State<SignInForm> {
   SignInModel model = SignInModel();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSignIn() async {
+    if (_isLoading) return;
+    setState(() => _isLoading = true);
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final error = await authProvider.signIn(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+
+    if (error != null) {
+      showTopSnackBar(context, error);
+    } else {
+      // Load user specific data
+      final email = authProvider.userEmail;
+      final rewardsProvider = Provider.of<RewardsProvider>(context, listen: false);
+      final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+      final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+
+      await rewardsProvider.loadForUser(email);
+      await orderProvider.loadForUser(email);
+      await bookingProvider.loadForUser(email);
+
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +114,8 @@ class _SignInFormState extends State<SignInForm> {
           TextField(
             style: TextStyle(color: textColor),
             controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: "Enter your email",
               hintStyle: TextStyle(color: subTextColor),
@@ -98,6 +149,8 @@ class _SignInFormState extends State<SignInForm> {
             obscureText: model.isPasswordHidden,
             controller: passwordController,
             style: TextStyle(color: textColor),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _handleSignIn(),
             decoration: InputDecoration(
               hintText: "Enter your password",
               hintStyle: TextStyle(color: subTextColor),
@@ -148,25 +201,20 @@ class _SignInFormState extends State<SignInForm> {
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-              onPressed: () {
-                if (emailController.text.isEmpty ||
-                    passwordController.text.isEmpty) {
-                  showTopSnackBar(context, "Please enter email and password");
-                  return;
-                } else if (emailController.text == "ayat@gmail.com" &&
-                    passwordController.text == "123456") {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                } else {
-                  showTopSnackBar(context, "Invalid email or password");
-                }
-              },
-              child: const Text(
-                "Log In",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
+              onPressed: _isLoading ? null : _handleSignIn,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2.5,
+                      ),
+                    )
+                  : const Text(
+                      "Log In",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
             ),
           ),
 

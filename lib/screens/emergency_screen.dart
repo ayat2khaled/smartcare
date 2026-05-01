@@ -1,4 +1,4 @@
-import 'dart:math';
+
 import 'package:first_project/models/home_screen_model.dart';
 import 'package:first_project/services/data_service.dart';
 import 'package:first_project/screens/hospital_screen.dart';
@@ -18,22 +18,24 @@ class _EmergencyScreenState extends State<EmergencyScreen>
   bool isLoading = true;
   bool locationSet = false;
 
-  // User location defaults (Arab Open University, Egypt)
-  double userLat = 30.1195;
-  double userLng = 31.6032;
-  String locationName = "Arab Open University, Egypt";
-
-  final TextEditingController _latController = TextEditingController();
-  final TextEditingController _lngController = TextEditingController();
+  String locationName = "Egypt";
 
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
 
   // Predefined locations for quick selection
-  final List<Map<String, dynamic>> quickLocations = [
-    {'name': 'Arab Open University', 'lat': 30.1195, 'lng': 31.6032},
-    {'name': 'Tanta City', 'lat': 30.7865, 'lng': 31.0004},
-    {'name': 'Alexandria', 'lat': 31.2001, 'lng': 29.9187},
+  final List<String> quickLocations = [
+    'El Shorouk',
+    'Tanta',
+    'Cairo',
+    '6th of October',
+    'Alexandria',
+    'Fifth Settlement',
+    'El Mahalla',
+    'Damietta',
+    'Mansoura',
+    'Badr',
+    'Sheikh Zayed',
   ];
 
   @override
@@ -52,13 +54,15 @@ class _EmergencyScreenState extends State<EmergencyScreen>
   @override
   void dispose() {
     _pulseController.dispose();
-    _latController.dispose();
-    _lngController.dispose();
     super.dispose();
   }
 
   Future<void> _fetchHospitals() async {
     final hospitals = await DataService.fetchHospitals();
+    debugPrint("🏥 Loaded ${hospitals.length} hospitals");
+    if (hospitals.isNotEmpty) {
+      debugPrint("🏥 First hospital address: ${hospitals.first.address}");
+    }
     if (mounted) {
       setState(() {
         allHospitals = hospitals;
@@ -67,46 +71,21 @@ class _EmergencyScreenState extends State<EmergencyScreen>
     }
   }
 
-  double _calculateDistance(double lat1, double lng1, double lat2, double lng2) {
-    const earthRadius = 6371.0;
-    final dLat = _toRadians(lat2 - lat1);
-    final dLng = _toRadians(lng2 - lng1);
-    final a = sin(dLat / 2) * sin(dLat / 2) +
-        cos(_toRadians(lat1)) *
-            cos(_toRadians(lat2)) *
-            sin(dLng / 2) *
-            sin(dLng / 2);
-    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return earthRadius * c;
-  }
-
-  double _toRadians(double degree) => degree * pi / 180;
-
-  void _setLocation(double lat, double lng, String name) {
+  void _setLocation(String name) {
     setState(() {
-      userLat = lat;
-      userLng = lng;
       locationName = name;
       locationSet = true;
 
-      // Filter hospitals within 50km radius
+      // Filter hospitals strictly by city name to prevent overlapping
       sortedHospitals = allHospitals.where((h) {
-        final dist = _calculateDistance(userLat, userLng, h.latitude, h.longitude);
-        return dist <= 50.0;
+        return h.address.toLowerCase().contains(name.toLowerCase());
       }).toList();
 
-      sortedHospitals.sort((a, b) {
-        final distA = _calculateDistance(userLat, userLng, a.latitude, a.longitude);
-        final distB = _calculateDistance(userLat, userLng, b.latitude, b.longitude);
-        return distA.compareTo(distB);
-      });
+      debugPrint("🔍 Filtering for '$name': found ${sortedHospitals.length} out of ${allHospitals.length} total");
     });
   }
 
   void _showLocationPicker() {
-    _latController.text = userLat.toString();
-    _lngController.text = userLng.toString();
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -155,10 +134,10 @@ class _EmergencyScreenState extends State<EmergencyScreen>
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: quickLocations.map((loc) {
+                  children: quickLocations.map((name) {
                     return GestureDetector(
                       onTap: () {
-                        _setLocation(loc['lat'], loc['lng'], loc['name']);
+                        _setLocation(name);
                         Navigator.pop(ctx);
                       },
                       child: Container(
@@ -175,7 +154,7 @@ class _EmergencyScreenState extends State<EmergencyScreen>
                           children: [
                             Icon(Icons.location_on, size: 16, color: primary),
                             const SizedBox(width: 6),
-                            Text(loc['name'], style: TextStyle(color: primary, fontWeight: FontWeight.w600, fontSize: 13)),
+                            Text(name, style: TextStyle(color: primary, fontWeight: FontWeight.w600, fontSize: 13)),
                           ],
                         ),
                       ),
@@ -441,7 +420,7 @@ class _EmergencyScreenState extends State<EmergencyScreen>
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    hospital.ambulanceNumber.isNotEmpty ? hospital.ambulanceNumber : "123",
+                                    "123",
                                     style: const TextStyle(
                                       color: emergencyRed,
                                       fontSize: 22,
@@ -486,9 +465,6 @@ class _EmergencyScreenState extends State<EmergencyScreen>
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     final hospital = sortedHospitals[index];
-                    final dist = _calculateDistance(
-                      userLat, userLng, hospital.latitude, hospital.longitude,
-                    );
 
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
@@ -566,7 +542,7 @@ class _EmergencyScreenState extends State<EmergencyScreen>
                                             color: primaryColor.withValues(alpha: 0.1),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
-                                          child: Text("${dist.toStringAsFixed(1)} km",
+                                          child: Text(hospital.distance,
                                               style: TextStyle(color: primaryColor, fontSize: 11, fontWeight: FontWeight.w600)),
                                         ),
                                         const SizedBox(width: 8),

@@ -1,5 +1,6 @@
 import 'package:first_project/screens/splash_screen.dart';
 import 'package:first_project/themes/theme_provider.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/providers/cart_provider.dart';
 import 'package:first_project/providers/order_provider.dart';
 import 'package:first_project/providers/notification_provider.dart';
@@ -14,6 +15,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(create: (context) => OrderProvider()),
         ChangeNotifierProvider(create: (context) => NotificationProvider()),

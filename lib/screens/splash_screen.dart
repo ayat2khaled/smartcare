@@ -1,6 +1,13 @@
 import 'dart:async';
+import 'package:first_project/providers/auth_provider.dart';
+import 'package:first_project/providers/rewards_provider.dart';
+import 'package:first_project/providers/order_provider.dart';
+import 'package:first_project/providers/booking_provider.dart';
+import 'package:first_project/screens/home_screen.dart';
 import 'package:first_project/screens/onboarding_1_screen.dart';
+import 'package:first_project/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,19 +37,51 @@ class _SplashScreenState extends State<SplashScreen>
     );
     _controller.forward();
 
-    Timer(const Duration(seconds: 3), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (_, _, _) => Onboarding1(),
-            transitionsBuilder: (_, anim, _, child) =>
-                FadeTransition(opacity: anim, child: child),
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-        );
-      }
-    });
+    _initAndNavigate();
+  }
+
+  Future<void> _initAndNavigate() async {
+    // Initialize auth state while splash is showing
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider.initialize();
+
+    // Wait at least 3 seconds for the splash animation
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    Widget destination;
+
+    if (authProvider.isLoggedIn) {
+      // User is already logged in → load their data and go to Home
+      final email = authProvider.userEmail;
+      final rewardsProvider = Provider.of<RewardsProvider>(context, listen: false);
+      final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+      final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+
+      await rewardsProvider.loadForUser(email);
+      await orderProvider.loadForUser(email);
+      await bookingProvider.loadForUser(email);
+      destination = HomeScreen();
+    } else if (authProvider.hasRegisteredUsers) {
+      // Has an account but not logged in → go to Sign In
+      destination = const SignIn();
+    } else {
+      // First time ever → show onboarding flow
+      destination = Onboarding1();
+    }
+
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (_, _, _) => destination,
+        transitionsBuilder: (_, anim, _, child) =>
+            FadeTransition(opacity: anim, child: child),
+        transitionDuration: const Duration(milliseconds: 500),
+      ),
+    );
   }
 
   @override

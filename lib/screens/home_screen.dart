@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   final List<Widget> screens = [
     const HomeContent(),
-    const ChatbotScreen(),
+    const MedicalChatScreen(),
     ProfileScreen(),
   ];
 

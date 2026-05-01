@@ -2,8 +2,8 @@
   "hospitals": [
     {
       "name": "Al Shorouk General Hospital",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Hospital_building_front.jpg/800px-Hospital_building_front.jpg",
-      "address": "El Shorouk City, Cairo Governorate, Egypt",
+      "image": "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF9_kW2EM-ay2UnS77qGPvRgdrqVixPUwypumhmScSEdhivHKyiu-DomiYlt0bJBpGy9CsXNOvWz-E7V0a2PGGJNzRpLb9pVLG_mkhCXdBH4Nskaov1J-g9f3X27p7rAO_T=s1360-w1360-h1020-rw",
+      "address": "El Shorouk City, Egypt",
       "distance_km": 3.2,
       "rating": 4.1,
       "phone": "+20 2 2687 4000",
@@ -22,7 +22,7 @@
     },
     {
       "name": "International Medical Center (IMC)",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Hospital_in_Cairo.jpg/800px-Hospital_in_Cairo.jpg",
+      "image": "https://imc.eventyonline.com/wp-content/uploads/2024/05/20161205_1c00551_fingers_01-scaled.jpg",
       "address": "Cairo-Ismailia Desert Road, Cairo, Egypt",
       "distance_km": 12.5,
       "rating": 4.8,
@@ -42,8 +42,8 @@
     },
     {
       "name": "Nour El Shorouk Hospital",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Hospital_ward.jpg/800px-Hospital_ward.jpg",
-      "address": "El Shorouk City, Cairo Governorate, Egypt",
+      "image": "https://images.healtheg.com//Images/1074/260988803_4411442798954951_7177920095099009103_n31ac77b6-b7c9-4b9d-977c-118f76fe96f1.jpg",
+      "address": "El Shorouk City, Egypt",
       "distance_km": 4.0,
       "rating": 4.3,
       "phone": "+20 2 2687 5000",
@@ -62,7 +62,7 @@
     },
     {
       "name": "Tanta University Hospital",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Tanta_University_Hospital.jpg/800px-Tanta_University_Hospital.jpg",
+      "image": "https://www.presidency.eg/media/128284/%D8%B7%D9%86%D8%B7%D8%A7jpg.jpg",
       "address": "El-Gaish Street, Tanta, Gharbia Governorate, Egypt",
       "distance_km": 95.0,
       "rating": 4.5,
@@ -81,8 +81,405 @@
       }
     },
     {
-      "name": "Alexandria Medical Center",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Hospital_in_Cairo.jpg/800px-Hospital_in_Cairo.jpg",
+  "name": "Ibn Sina Specialized Hospital",
+  "image": "https://images.healtheg.com//Images/53504/Screenshot_17fb8b6fa3-56c9-4376-8260-154bf8c56b10.jpg",
+  "address": "El-Gaish Street, Tanta Qism 2, Tanta, Gharbia, Egypt",
+  "distance_km": 2.6,
+  "rating": 4.3,
+  "phone": "+20 114 468 0000",
+  "ambulance_number": "123",
+  "latitude": 30.7866,
+  "longitude": 31.0004,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Om El Qura Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4LoOW9KqG5qSFHkErEyjHaCZ04bhyYz6VEw&s",
+  "address": "El Estad Street, Tanta Qism 2, Tanta, Gharbia, Egypt",
+  "distance_km": 2.5,
+  "rating": 4.0,
+  "phone": "040 3341908",
+  "ambulance_number": "123",
+  "latitude": 30.7864,
+  "longitude": 31.0006,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},{
+  "name": "Mansoura New General Hospital",
+  "image": "https://gate.ahram.org.eg/Media/News/2021/12/14/19_2021-637751158953874592-387.jpg",
+  "address": "El Salam Street off Abdel Salam Aref Street, behind Mansoura Stadium, Mansoura, Dakahlia, Egypt",
+  "distance_km": 2.0,
+  "rating": 4.1,
+  "phone": "+20 50 221 5760",
+  "ambulance_number": "123",
+  "latitude": 31.0418,
+  "longitude": 31.3669,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Mansoura University Emergency Hospital",
+  "image": "https://www.mans.edu.eg/images/news/2026/03/260312-03/01.jpg",
+  "address": "Gehan El Sadat Street, Mansoura, Dakahlia, Egypt",
+  "distance_km": 2.2,
+  "rating": 4.5,
+  "phone": "+20 50 220 2666",
+  "ambulance_number": "123",
+  "latitude": 31.0412,
+  "longitude": 31.3778,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+    {
+      "name": "Badr University Hospital",
+      "image": "https://tse4.mm.bing.net/th/id/OIP.JQpfxkYN6_ndVnTovD4bawHaD7?rs=1&pid=ImgDetMain&o=7&rm=3",
+      "address": "Badr City, Egypt",
+      "distance_km": 7.1,
+      "rating": 4.3,
+      "phone": "+20 2 2865 0500",
+      "ambulance_number": "123",
+      "latitude": 30.1442,
+      "longitude": 31.7357,
+      "working_hours": {
+        "Sunday": "24 Hours",
+        "Monday": "24 Hours",
+        "Tuesday": "24 Hours",
+        "Wednesday": "24 Hours",
+        "Thursday": "24 Hours",
+        "Friday": "24 Hours",
+        "Saturday": "24 Hours"
+      }
+    },
+    {
+      "name": "Kasr Al Ainy Hospital",
+      "image": "https://english.ahram.org.eg/Media/News/2025/1/21/41_2025-638730750461888248-188.jpg",
+      "address": "Cairo University, Cairo",
+      "distance_km": 12.0,
+      "rating": 4.2,
+      "phone": "+20 2 2364 0000",
+      "ambulance_number": "123",
+      "latitude": 30.0276,
+      "longitude": 31.2107,
+      "working_hours": {
+        "Sunday": "24 Hours",
+        "Monday": "24 Hours",
+        "Tuesday": "24 Hours",
+        "Wednesday": "24 Hours",
+        "Thursday": "24 Hours",
+        "Friday": "24 Hours",
+        "Saturday": "24 Hours"
+      }
+    },
+    {
+  "name": "As-Salam International Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvk9iJKRtu2egMLED8LCjaVWs9krF5lGeMBw&s",
+  "address": "83 Street, Fifth Settlement, Egypt",
+  "distance_km": 5.0,
+  "rating": 4.4,
+  "phone": "+20 109 200 1443",
+  "hotline": "19885",
+  "ambulance_number": "19885",
+  "latitude": 30.0074,
+  "longitude": 31.4284,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Queens Royal Hospital",
+  "image": "https://queensroyalhospital.com/wp-content/uploads/2025/10/image-2-1024x683.webp",
+  "address": "90 Street, Fifth Settlement, Egypt",
+  "distance_km": 4.2,
+  "rating": 4.3,
+  "phone": "+20 127 600 3094",
+  "ambulance_number": "123",
+  "latitude": 30.0195,
+  "longitude": 31.4356,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "October 6 University Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh1wobXWtXGi1HZLc4Haiexn38GHRBW29L_w&s",
+  "address": "Al Mehwar Al Markazi, 6th of October City, Giza, Egypt",
+  "distance_km": 3.5,
+  "rating": 3.5,
+  "phone": "+20 121 266 2227",
+  "ambulance_number": "123",
+  "latitude": 29.9787,
+  "longitude": 30.9502,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+}, 
+{
+  "name": "Al Safwa Hospital",
+  "image": "https://images.healtheg.com//Images/53525/Screenshot_47db41f1d-5dac-4c7a-893d-78ac22149387.jpg",
+  "address": "First District, Omar Ibn El-Khattab Street, 6th of October City, Giza, Egypt",
+  "distance_km": 4.1,
+  "rating": 3.1,
+  "phone": "+20 2 38372266",
+  "ambulance_number": "123",
+  "latitude": 29.9660,
+  "longitude": 30.9514,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "El Nada Hospital Sheikh Zayed",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5vciXPtbNZ0fBMcCHvDZDk7SRbpaq2n9LQQ&s",
+  "address": "Westown, SODIC, Sheikh Zayed City, Giza, Egypt",
+  "rating": 4.0,
+  "phone": "+20 103 337 6450",
+  "ambulance_number": "123",
+  "latitude": 30.0675,
+  "longitude": 30.9338,
+ "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Global Care Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTebaCmErfTG2a2mOoPIaueg1zC6aAlYStbQA&s",
+  "address": "Behind Al Shabab Road, Sheikh Zayed City, Giza, Egypt",
+  "rating": 3.5,
+  "phone": "+20 2 3837 2266",
+  "ambulance_number": "123",
+  "latitude": 30.0308,
+  "longitude": 30.9989,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Damietta General Hospital",
+  "image": "https://smc.gov.eg/MappedFolder//ar/DamiettaHospitaAr/PublishingImages/%D8%A7%D9%8A%D9%82%D9%88%D9%86%D8%A7%D8%AA/domiat.png",
+  "address": "Saad Zaghloul Street, beside Housing & Development Bank, Damietta, Egypt",
+  "distance_km": 2.5,
+  "rating": 3.9,
+  "phone": "+20 57 324 340",
+  "ambulance_number": "123",
+  "latitude": 31.4167,
+  "longitude": 31.8133,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Al-Azhar University Hospital (New Damietta)",
+  "image": "https://images.healtheg.com//Images/53687/Screenshot_5a5884c1b-1b32-4ce1-96d6-a3542cacebd4.jpg",
+  "address": "First District, Sixth Neighborhood, Industrial Road, New Damietta City, Damietta, Egypt",
+  "distance_km": 6.8,
+  "rating": 4.2,
+  "phone": "+20 57 240 4509",
+  "ambulance_number": "123",
+  "latitude": 31.4510,
+  "longitude": 31.6700,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+    {
+  "name": "Zahra Hospital",
+  "image": "https://admin.gmthworld.com/images/hospitals/20220914-6321919d3b812.webp",
+  "address": "Abdel Moneim Salem Street, El Mahalla El Kubra, Gharbia, Egypt",
+  "distance_km": 2.8,
+  "rating": 4.0,
+  "phone": "+20 40 225 0000",
+  "ambulance_number": "123",
+  "latitude": 30.9690,
+  "longitude": 31.1665,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Shifa City Hospital",
+  "image": "https://old.shifaegypt.com/public/img/banner/home-hero-image.jpg",
+  "address": "Abu Ali Area, El Mahalla El Kubra, Gharbia, Egypt",
+  "distance_km": 3.5,
+  "rating": 4.1,
+  "phone": "+20 40 222 3000",
+  "ambulance_number": "123",
+  "latitude": 30.9705,
+  "longitude": 31.1640,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Chest Hospital",
+  "image": "https://img.youm7.com/ArticleImgs/2020/1/15/95434-%D8%A3%D9%82%D8%AF%D9%85-%D9%85%D8%B3%D8%AA%D8%B4%D9%81%D9%89-%D8%B5%D8%AF%D8%B1-(13).jpg",
+  "address": "El Mahalla El Kubra, Gharbia, Egypt",
+  "distance_km": 3.0,
+  "rating": 4.0,
+  "phone": "+20 40 224 5000",
+  "ambulance_number": "123",
+  "latitude": 30.9720,
+  "longitude": 31.1680,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Abou Qir General Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFpsSs_PWc4yQgiQ1tG72rgjM1KgSaAdTkrA&s",
+  "address": "El Bahr El Mayet Street, Abu Qir, Montaza 2, Alexandria, Egypt",
+  "distance_km": 12.5,
+  "rating": 3.8,
+  "phone": "+20 3 5621542",
+  "ambulance_number": "123",
+  "latitude": 31.3160,
+  "longitude": 30.0620,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+{
+  "name": "Saudi German Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOOQKfPy2nR4j8hUKGM99pU-SPyF2GTLdQOA&s",
+  "address": "56 Abd El Salam Aref St., Saba Pasha, Alexandria, Egypt",
+  "distance_km": 6.8,
+  "rating": 4.2,
+  "phone": "+20 3 5841717",
+  "ambulance_number": "123",
+  "latitude": 31.2265,
+  "longitude": 29.9509,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},{
+  "name": "Cleopatra Hospital",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0tyEYz3qvRUa8oodedRa_2973zPMzevpOnA&s",
+  "address": "39 Cleopatra Street, Salah El Din Square, Heliopolis, Cairo, Egypt",
+  "distance_km": 6.0,
+  "rating": 4.2,
+  "phone": "+20 2 24143931",
+  "ambulance_number": "19668",
+  "latitude": 30.0931,
+  "longitude": 31.3298,
+  "working_hours": {
+    "Sunday": "24 Hours",
+    "Monday": "24 Hours",
+    "Tuesday": "24 Hours",
+    "Wednesday": "24 Hours",
+    "Thursday": "24 Hours",
+    "Friday": "24 Hours",
+    "Saturday": "24 Hours"
+  }
+},
+    {
+      "name": "Alexandria Urology Hospital",
+      "image": "https://media.licdn.com/dms/image/v2/C4D1BAQEKM3r1l27ttw/company-background_10000/company-background_10000/0/1595419970905/alexandria_urology_hospital_cover?e=2147483647&v=beta&t=JthP4UwcTOMhgr2GMlpVsZoHJwavdDHFiD-uVDSfLkY",
       "address": "14 May Road, Smouha, Alexandria, Egypt",
       "distance_km": 215.0,
       "rating": 4.6,

@@ -2,6 +2,8 @@ import 'package:first_project/components/profile_title.dart';
 import 'package:first_project/models/profile_model.dart';
 import 'package:first_project/screens/booking_screen.dart';
 import 'package:first_project/screens/my_orders_screen.dart';
+import 'package:first_project/screens/sign_in_screen.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
 import 'package:first_project/providers/order_provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
@@ -15,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
     final isDark = themeProvider.isDarkMode;
     final textColor =
         isDark ? const Color(0xFFE2E8F0) : const Color(0xFF1E293B);
@@ -52,7 +55,19 @@ class ProfileScreen extends StatelessWidget {
         title: "Log Out",
         icon: Icons.logout,
         iconColor: Colors.red,
-        onTap: () {},
+        onTap: () async {
+          await authProvider.logOut();
+          if (context.mounted) {
+            Provider.of<RewardsProvider>(context, listen: false).clearUserData();
+            Provider.of<OrderProvider>(context, listen: false).clearUserData();
+            Provider.of<BookingProvider>(context, listen: false).clearUserData();
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const SignIn()),
+              (route) => false,
+            );
+          }
+        },
       ),
     ];
 
@@ -90,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                     child: const CircleAvatar(
                       radius: 50,
                       backgroundImage: AssetImage(
-                          "images/WhatsApp Image 2026-03-08 at 2.50.51 AM.jpeg"),
+                          "images/WhatsApp Image 2026-03-08 at 2.15.02 AM.jpeg"),
                     ),
                   ),
                   Container(
@@ -112,13 +127,13 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Text("Mr. Mohamed",
+            Text(authProvider.userName.isNotEmpty ? authProvider.userName : "User",
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: textColor)),
             const SizedBox(height: 2),
-            Text("m.user@smartcare.com",
+            Text(authProvider.userEmail.isNotEmpty ? authProvider.userEmail : "user@smartcare.com",
                 style: TextStyle(fontSize: 13, color: subTextColor)),
             const SizedBox(height: 24),
 

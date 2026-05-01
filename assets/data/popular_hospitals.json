@@ -1,0 +1,68 @@
+{
+  "hospitals": [
+    {
+      "name": "Dar Al Fouad Hospital",
+      "image": "https://th.bing.com/th/id/OIP.K7IH0Hq3gbEPv6f8luis0wHaFn?w=231&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "6th of October City, Giza",
+      "distance_km": 8.5,
+      "rating": 4.6,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "57357 Children's Cancer Hospital",
+      "image": "https://th.bing.com/th/id/OIP.gXzrnUUX22p0JDGANlPDYQHaE8?w=300&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "Sayeda Zeinab, Cairo",
+      "distance_km": 6.8,
+      "rating": 4.9,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "Cleopatra Hospital",
+      "image": "https://th.bing.com/th/id/OIP.w_L7WPFo_EsQJdBLZJwp6wHaEK?w=268&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "Heliopolis, Cairo",
+      "distance_km": 5.2,
+      "rating": 4.4,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "Ain Shams University Hospitals",
+      "image": "https://th.bing.com/th/id/OIP.xwsSCUt_RJ9EWCAhed99lAHaGk?w=182&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "Abbassia, Cairo",
+      "distance_km": 7.3,
+      "rating": 4.1,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "Kasr Al Ainy Hospital",
+      "image": "https://th.bing.com/th/id/OIP.7D6mEKq2pQ6r2QgbUWU40gHaE6?w=259&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "Cairo University, Giza",
+      "distance_km": 9.0,
+      "rating": 4.2,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "Saudi German Hospital Cairo",
+      "image": "https://th.bing.com/th/id/OIP.M5wciJ6AuEKTrsQnh00ruwHaEj?w=276&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "New Cairo",
+      "distance_km": 12.4,
+      "rating": 4.5,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "El Salam International Hospital",
+      "image": "https://th.bing.com/th/id/OIP.f2tIpAa7jmeS1Qka-RsIjgHaE7?w=263&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "Maadi, Cairo",
+      "distance_km": 10.1,
+      "rating": 4.3,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    },
+    {
+      "name": "Alexandria Main University Hospital",
+      "image": "https://th.bing.com/th/id/OIP.NhbvcdWOLBssbWv_VS3nBgHaEK?w=312&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3",
+      "address": "Alexandria",
+      "distance_km": 15.0,
+      "rating": 4.0,
+      "working_hours": { "Sunday": "24 Hours", "Monday": "24 Hours", "Tuesday": "24 Hours", "Wednesday": "24 Hours", "Thursday": "24 Hours", "Friday": "24 Hours", "Saturday": "24 Hours" }
+    }
+  ]
+}

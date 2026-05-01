@@ -1,7 +1,13 @@
 import 'package:first_project/models/sign_up_model.dart';
-import 'package:first_project/screens/sign_in_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/screens/home_screen.dart';
+import 'package:first_project/screens/sign_in_screen.dart';
+import 'package:first_project/utils/top_snackbar.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:first_project/providers/rewards_provider.dart';
+import 'package:first_project/providers/order_provider.dart';
+import 'package:first_project/providers/booking_provider.dart';
 
 
 class SignUpForm extends StatefulWidget {
@@ -13,6 +19,58 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   SignUpModel model = SignUpModel();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSignUp() async {
+    if (_isLoading) return;
+    setState(() => _isLoading = true);
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final error = await authProvider.signUp(
+      name: nameController.text,
+      email: emailController.text,
+      password: passwordController.text,
+      confirmPassword: confirmPasswordController.text,
+    );
+
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+
+    if (error != null) {
+      showTopSnackBar(context, error);
+    } else {
+      // Load user specific data
+      final email = authProvider.userEmail;
+      final rewardsProvider = Provider.of<RewardsProvider>(context, listen: false);
+      final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+      final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+
+      await rewardsProvider.loadForUser(email);
+      await orderProvider.loadForUser(email);
+      await bookingProvider.loadForUser(email);
+
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +98,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
           Center(
             child: Text(
-              "Hi! welcome back ,You've been missed",
+              "Create your account to get started",
               style: TextStyle(color: subTextColor),
             ),
           ),
@@ -50,7 +108,9 @@ class _SignUpFormState extends State<SignUpForm> {
           Text("Full Name", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: textColor)),
           const SizedBox(height: 5),
           TextField(
+            controller: nameController,
             style: TextStyle(color: textColor),
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: "Enter your Full name",
               hintStyle: TextStyle(color: subTextColor),
@@ -66,7 +126,10 @@ class _SignUpFormState extends State<SignUpForm> {
           Text("Email", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: textColor)),
           const SizedBox(height: 5),
           TextField(
+            controller: emailController,
             style: TextStyle(color: textColor),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: "Enter your email",
               hintStyle: TextStyle(color: subTextColor),
@@ -82,8 +145,10 @@ class _SignUpFormState extends State<SignUpForm> {
           Text("Password", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: textColor)),
           const SizedBox(height: 5),
           TextField(
+            controller: passwordController,
             obscureText: model.isPasswordHidden,
             style: TextStyle(color: textColor),
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: "Enter your password",
               hintStyle: TextStyle(color: subTextColor),
@@ -103,8 +168,11 @@ class _SignUpFormState extends State<SignUpForm> {
           Text("Confirm Password", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: textColor)),
           const SizedBox(height: 5),
           TextField(
+            controller: confirmPasswordController,
             obscureText: model.isPasswordHidden1,
             style: TextStyle(color: textColor),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _handleSignUp(),
             decoration: InputDecoration(
               hintText: "Confirm your password",
               hintStyle: TextStyle(color: subTextColor),
@@ -126,10 +194,17 @@ class _SignUpFormState extends State<SignUpForm> {
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-              },
-              child: const Text("Sign Up", style: TextStyle(color: Colors.white, fontSize: 18)),
+              onPressed: _isLoading ? null : _handleSignUp,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2.5,
+                      ),
+                    )
+                  : const Text("Sign Up", style: TextStyle(color: Colors.white, fontSize: 18)),
             ),
           ),
 

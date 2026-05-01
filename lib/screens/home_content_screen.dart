@@ -12,6 +12,7 @@ import 'package:first_project/screens/rewards_screen.dart';
 import 'package:first_project/models/home_screen_model.dart';
 import 'package:first_project/models/doctor_model.dart';
 import 'package:first_project/services/data_service.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class _HomeContentState extends State<HomeContent> {
   List<DoctorModel> allDoctors = [];
   List<Hospital> allHospitals = [];
   List<DoctorModel> popularDoctors = [];
-  List<Hospital> nearbyHospitals = [];
+  List<Hospital> popularHospitals = [];
   bool isLoading = true;
   String searchQuery = "";
 
@@ -38,7 +39,7 @@ class _HomeContentState extends State<HomeContent> {
 
   Future<void> _fetchData() async {
     final docsResponse = await DataService.fetchDoctors();
-    final hospsResponse = await DataService.fetchHospitals();
+    final hospsResponse = await DataService.fetchNearbyHospitals();
 
     if (mounted) {
       setState(() {
@@ -46,7 +47,7 @@ class _HomeContentState extends State<HomeContent> {
         allHospitals = hospsResponse;
         popularDoctors = docsResponse.take(4).toList();
         
-        nearbyHospitals = hospsResponse.take(2).toList();
+        popularHospitals = hospsResponse.take(2).toList();
         isLoading = false;
       });
     }
@@ -86,7 +87,7 @@ class _HomeContentState extends State<HomeContent> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Hello, Mohamed 👋",
+                        Text("Hello, ${context.watch<AuthProvider>().userName.split(' ').first} 👋",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -298,11 +299,11 @@ class _HomeContentState extends State<HomeContent> {
 
             const SizedBox(height: 28),
 
-            /// --- Nearby Hospital Section ---
+            /// --- Popular Hospital Section ---
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Nearby Hospital",
+                Text("Popular Hospital",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -326,7 +327,7 @@ class _HomeContentState extends State<HomeContent> {
 
             if (isLoading)
               const Center(child: CircularProgressIndicator())
-            else if (nearbyHospitals.length >= 2) ...[
+            else if (popularHospitals.length >= 2) ...[
               Row(
                 children: [
                   Expanded(
@@ -335,10 +336,10 @@ class _HomeContentState extends State<HomeContent> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HospitalScreen(hospital: nearbyHospitals[0])),
+                              builder: (context) => HospitalScreen(hospital: popularHospitals[0])),
                         );
                       },
-                      child: HospitalCard(info: nearbyHospitals[0]),
+                      child: HospitalCard(info: popularHospitals[0]),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -348,10 +349,10 @@ class _HomeContentState extends State<HomeContent> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HospitalScreen(hospital: nearbyHospitals[1])),
+                              builder: (context) => HospitalScreen(hospital: popularHospitals[1])),
                         );
                       },
-                      child: HospitalCard(info: nearbyHospitals[1]),
+                      child: HospitalCard(info: popularHospitals[1]),
                     ),
                   ),
                 ],

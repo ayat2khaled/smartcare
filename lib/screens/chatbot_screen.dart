@@ -1,57 +1,197 @@
-import 'package:first_project/Services/data_service.dart';
 import 'package:flutter/material.dart';
+import 'package:first_project/Services/prediction_service.dart';
 
-class ChatMessage {
-  final String text;
-  final bool isUser;
-  final DateTime time;
-  final List<Map<String, dynamic>>? results;
-
-  ChatMessage({
-    required this.text,
-    required this.isUser,
-    required this.time,
-    this.results,
-  });
-}
-
-class ChatbotScreen extends StatefulWidget {
-  const ChatbotScreen({super.key});
+class MedicalChatScreen extends StatefulWidget {
+  const MedicalChatScreen({super.key});
 
   @override
-  State<ChatbotScreen> createState() => _ChatbotScreenState();
+  State<MedicalChatScreen> createState() => _MedicalChatScreenState();
 }
 
-class _ChatbotScreenState extends State<ChatbotScreen> {
+// Conversation states
+enum _ChatState { askGender, askAge, ready }
+
+class _MedicalChatScreenState extends State<MedicalChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  final List<Map<String, dynamic>> _messages = [];
   final ScrollController _scrollController = ScrollController();
-  final List<ChatMessage> _messages = [];
-  bool _isTyping = false;
-  List<String> _collectedSymptoms = [];
+  bool _isLoading = false;
+
+  // User info collected through conversation
+  _ChatState _state = _ChatState.askGender;
+  String _gender = "";
+  int _age = 0;
 
   @override
   void initState() {
     super.initState();
-    _addBotMessage(
-      "👋 Hello! I'm SmartCare AI Assistant.\n\nI can help you identify possible illnesses based on your symptoms.\n\n⚠️ Note: This is for informational purposes only. Always consult a qualified doctor for diagnosis and treatment.\n\nPlease describe your symptoms (e.g., \"I have fever, headache, and sore throat\"):",
-    );
+    // Start by greeting, then ask for gender after a delay
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _addBotMessage(
+        "👋 Welcome to SmartCare!\n\n"
+        "I'm your AI-powered Symptom Checker. "
+        "Tell me what you're feeling, and I'll help identify possible conditions "
+        "and guide you to the right specialist.\n\n"
+        "⚠️ Please note: This is a preliminary analysis only "
+        "and does not replace professional medical advice."
+      );
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        _addBotMessage("Let's get started! I just need a couple of quick details first. 😊");
+        Future.delayed(const Duration(milliseconds: 600), () {
+          _addBotMessage("What is your gender?", type: "gender_options");
+        });
+      });
+    });
   }
 
-  void _addBotMessage(String text,
-      {List<Map<String, dynamic>>? results}) {
+  void _addBotMessage(String text, {String type = "text"}) {
     setState(() {
-      _messages.add(ChatMessage(
-        text: text,
-        isUser: false,
-        time: DateTime.now(),
-        results: results,
-      ));
+      _messages.add({"role": "bot", "content": text, "type": type});
     });
     _scrollToBottom();
   }
 
+  void _selectGender(String gender) {
+    setState(() {
+      _messages.add({"role": "user", "content": gender});
+    });
+    _gender = gender.toLowerCase();
+    setState(() => _state = _ChatState.askAge);
+    _scrollToBottom();
+    Future.delayed(const Duration(milliseconds: 200), () {
+      _addBotMessage("Welcome! 😊 Nice to meet you.\n\nLet's get started with your profile.");
+      Future.delayed(const Duration(milliseconds: 400), () {
+        _addBotMessage("How old are you?");
+      });
+    });
+  }
+
+  Future<void> _handleSend() async {
+    if (_controller.text.trim().isEmpty) return;
+    String userMsg = _controller.text.trim();
+
+    setState(() {
+      _messages.add({"role": "user", "content": userMsg});
+    });
+    _controller.clear();
+    _scrollToBottom();
+
+    switch (_state) {
+      case _ChatState.askGender:
+        // Should not happen since gender is now buttons, but fallback
+        _selectGender(userMsg);
+        break;
+      case _ChatState.askAge:
+        _handleAgeInput(userMsg);
+        break;
+      case _ChatState.ready:
+        await _handleSymptomInput(userMsg);
+        break;
+    }
+  }
+
+  void _handleAgeInput(String input) {
+    final parsed = int.tryParse(input.trim());
+    if (parsed == null || parsed <= 0 || parsed > 120) {
+      _addBotMessage("Please enter a valid age (e.g. 25).");
+      return;
+    }
+    _age = parsed;
+    setState(() => _state = _ChatState.ready);
+    _addBotMessage("Perfect! ✅\n\nYou're a $_gender, age $_age.\n\n"
+        "Now describe your symptoms and I'll analyze them for you. 🩺");
+  }
+
+  Future<void> _handleSymptomInput(String symptoms) async {
+    setState(() => _isLoading = true);
+    _scrollToBottom();
+
+    try {
+      final result = await PredictionService.predict(
+        text: symptoms,
+        gender: _gender,
+        age: _age,
+      );
+
+      if (result.predictions.isNotEmpty) {
+        // Determine severity based on top probability
+        final topProb = result.predictions.first.probability;
+        String severity;
+        if (topProb >= 0.5) {
+          severity = "High";
+        } else if (topProb >= 0.2) {
+          severity = "Medium";
+        } else {
+          severity = "Low";
+        }
+
+        // Add the analysis result as a special message type
+        setState(() {
+          _messages.add({
+            "role": "bot",
+            "type": "analysis",
+            "content": "",
+            "result": result,
+            "severity": severity,
+          });
+        });
+        _scrollToBottom();
+
+        // Prompt for another check
+        Future.delayed(const Duration(milliseconds: 600), () {
+          _addBotMessage("Feel free to describe any other symptoms if you'd like another analysis. 💬");
+        });
+      } else {
+        _addBotMessage(
+          "I couldn't recognize the symptoms you described.\n\n"
+          "Could you try again with clearer or more specific terms?\n\n"
+          "For example: \"I have a headache and fever\" or \"my stomach hurts and I feel nauseous\".",
+          type: "error",
+        );
+      }
+    } catch (e) {
+      _addBotMessage(
+        "I wasn't able to understand what you wrote properly.\n\n"
+        "Please try describing your symptoms in a different way.\n\n"
+        "💡 Tip: Use simple, clear descriptions like:\n"
+        "  • \"I have a headache\"\n"
+        "  • \"My throat hurts and I have a fever\"\n"
+        "  • \"I feel dizzy and tired\"",
+        type: "error",
+      );
+    } finally {
+      setState(() => _isLoading = false);
+      _scrollToBottom();
+    }
+  }
+
+  void _resetChat() {
+    setState(() {
+      _messages.clear();
+      _state = _ChatState.askGender;
+      _gender = "";
+      _age = 0;
+    });
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _addBotMessage(
+        "👋 Welcome to SmartCare!\n\n"
+        "I'm your AI-powered Symptom Checker. "
+        "Tell me what you're feeling, and I'll help identify possible conditions "
+        "and guide you to the right specialist.\n\n"
+        "⚠️ Please note: This is a preliminary analysis only "
+        "and does not replace professional medical advice."
+      );
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        _addBotMessage("Let's get started! I just need a couple of quick details first. 😊");
+        Future.delayed(const Duration(milliseconds: 600), () {
+          _addBotMessage("What is your gender?", type: "gender_options");
+        });
+      });
+    });
+  }
+
   void _scrollToBottom() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.delayed(const Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
@@ -62,408 +202,292 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     });
   }
 
-  void _handleUserMessage(String text) {
-    if (text.trim().isEmpty) return;
-
-    setState(() {
-      _messages.add(ChatMessage(
-        text: text,
-        isUser: true,
-        time: DateTime.now(),
-      ));
-      _isTyping = true;
-    });
-    _controller.clear();
-    _scrollToBottom();
-
-    Future.delayed(const Duration(milliseconds: 800), () {
-      _processInput(text.toLowerCase());
-    });
-  }
-
-  void _processInput(String input) {
-    final newSymptoms = _extractSymptoms(input);
-
-    if (newSymptoms.isEmpty &&
-        !input.contains('yes') &&
-        !input.contains('no') &&
-        !input.contains('done') &&
-        !input.contains('analyze') &&
-        !input.contains('check') &&
-        !input.contains('result')) {
-      setState(() => _isTyping = false);
-      _addBotMessage(
-        "I couldn't detect specific symptoms in your message. Please describe your symptoms more clearly.\n\nFor example: \"I have a fever, sore throat, and body aches\"",
-      );
-      return;
-    }
-
-    if (newSymptoms.isNotEmpty) {
-      _collectedSymptoms.addAll(newSymptoms);
-      _collectedSymptoms = _collectedSymptoms.toSet().toList();
-    }
-
-    if (_collectedSymptoms.isEmpty) {
-      setState(() => _isTyping = false);
-      _addBotMessage(
-        "Please tell me your symptoms so I can help identify possible conditions.",
-      );
-      return;
-    }
-
-    final results = DataService.matchSymptoms(_collectedSymptoms);
-
-    setState(() => _isTyping = false);
-
-    if (results.isEmpty) {
-      _addBotMessage(
-        "I couldn't find a clear match for your symptoms: ${_collectedSymptoms.join(', ')}.\n\nPlease consult a doctor for proper evaluation. Would you like to add more symptoms?",
-      );
-    } else {
-      String symptomsText = _collectedSymptoms.join(', ');
-      _addBotMessage(
-        "Based on your symptoms: $symptomsText\n\nHere are the most likely conditions:",
-        results: results,
-      );
-
-      Future.delayed(const Duration(milliseconds: 400), () {
-        _addBotMessage(
-          "⚕️ Important Reminder: These are possible conditions based on symptoms only. Please visit a doctor for accurate diagnosis.\n\nWould you like to check other symptoms? Just type them!",
-        );
-        _collectedSymptoms = [];
-      });
-    }
-  }
-
-  List<String> _extractSymptoms(String input) {
-    const symptomKeywords = [
-      'fever', 'cough', 'headache', 'sore throat', 'fatigue', 'tired',
-      'nausea', 'vomiting', 'diarrhea', 'chest pain', 'shortness of breath',
-      'runny nose', 'sneezing', 'body ache', 'muscle pain', 'joint pain',
-      'dizziness', 'blurred vision', 'rash', 'itching', 'swelling',
-      'loss of taste', 'loss of smell', 'abdominal pain', 'stomach pain',
-      'back pain', 'neck pain', 'difficulty breathing', 'wheezing',
-      'palpitations', 'anxiety', 'depression', 'insomnia', 'weakness',
-      'pale skin', 'cold hands', 'frequent urination', 'excessive thirst',
-      'weight loss', 'burning sensation', 'cloudy urine', 'chills',
-      'light sensitivity', 'sound sensitivity', 'congestion',
-      'difficulty swallowing', 'sweating', 'itchy eyes', 'watery eyes',
-    ];
-
-    List<String> found = [];
-    for (var keyword in symptomKeywords) {
-      if (input.contains(keyword)) {
-        found.add(keyword);
-      }
-    }
-    return found;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
-    final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? const Color(0xFFE2E8F0) : const Color(0xFF1E293B);
     final primaryColor = Theme.of(context).colorScheme.primary;
 
+    String hintText;
+    switch (_state) {
+      case _ChatState.askGender:
+        hintText = "Select your gender above...";
+        break;
+      case _ChatState.askAge:
+        hintText = "Enter your age...";
+        break;
+      case _ChatState.ready:
+        hintText = "Describe your symptoms...";
+        break;
+    }
+
     return Scaffold(
-      backgroundColor: bgColor,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
-                shape: BoxShape.circle,
+      backgroundColor: const Color(0xFFF5F6F8),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(55.0),
+        child: AppBar(
+          backgroundColor: primaryColor,
+          elevation: 0,
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Icon(Icons.health_and_safety, color: Colors.white, size: 28),
+          ),
+          titleSpacing: 0,
+          title: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "SmartCare",
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              child: const Icon(Icons.medical_services,
-                  color: Colors.white, size: 20),
-            ),
-            const SizedBox(width: 10),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('SmartCare AI',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16)),
-                Text('Symptom Checker',
-                    style: TextStyle(color: Colors.white70, fontSize: 12)),
-              ],
+              Text(
+                "Preliminary analysis only - not a medical consultation.",
+                style: TextStyle(color: Colors.white70, fontSize: 10),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh, color: Colors.white),
+              onPressed: _resetChat,
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () {
-              setState(() {
-                _messages.clear();
-                _collectedSymptoms.clear();
-              });
-              _addBotMessage(
-                "👋 Chat reset! Please describe your symptoms and I'll help identify possible conditions.",
-              );
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              padding: const EdgeInsets.all(16),
-              itemCount: _messages.length + (_isTyping ? 1 : 0),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
-                if (_isTyping && index == _messages.length) {
-                  return _buildTypingIndicator(cardColor);
-                }
                 final msg = _messages[index];
-                return _buildMessageBubble(
-                    msg, cardColor, textColor, isDark, primaryColor);
+                if (msg['role'] == "user") {
+                  return _buildUserBubble(msg['content'], primaryColor);
+                } else {
+                  final type = msg['type'] ?? 'text';
+                  if (type == "gender_options") {
+                    return _buildGenderOptions(msg['content'], primaryColor);
+                  } else if (type == "analysis") {
+                    return _buildAnalysisCard(msg['result'], msg['severity'], primaryColor);
+                  } else if (type == "error") {
+                    return _buildErrorBubble(msg['content'], primaryColor);
+                  } else {
+                    return _buildBotBubble(msg['content'], primaryColor);
+                  }
+                }
               },
             ),
           ),
-
-          if (_messages.length == 1) _buildQuickChips(isDark, primaryColor),
-
-          _buildInputField(cardColor, textColor, isDark, primaryColor),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMessageBubble(ChatMessage msg, Color cardColor,
-      Color textColor, bool isDark, Color primaryColor) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Column(
-        crossAxisAlignment:
-            msg.isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: msg.isUser
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (!msg.isUser) ...[
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor: primaryColor,
-                  child: const Icon(Icons.medical_services,
-                      color: Colors.white, size: 16),
-                ),
-                const SizedBox(width: 8),
-              ],
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: msg.isUser ? primaryColor : cardColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(18),
-                      topRight: const Radius.circular(18),
-                      bottomLeft: msg.isUser
-                          ? const Radius.circular(18)
-                          : Radius.zero,
-                      bottomRight: msg.isUser
-                          ? Radius.zero
-                          : const Radius.circular(18),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.06),
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    msg.text,
-                    style: TextStyle(
-                      color: msg.isUser ? Colors.white : textColor,
-                      fontSize: 14,
-                      height: 1.4,
-                    ),
-                  ),
-                ),
-              ),
-              if (msg.isUser) ...[
-                const SizedBox(width: 8),
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor:
-                      isDark ? const Color(0xFF334155) : Colors.grey.shade300,
-                  child: Icon(Icons.person,
-                      color: isDark ? Colors.white60 : Colors.grey, size: 18),
-                ),
-              ],
-            ],
-          ),
-
-          // Disease results
-          if (msg.results != null && msg.results!.isNotEmpty)
+          if (_isLoading)
             Padding(
-              padding: const EdgeInsets.only(left: 40, top: 8),
-              child: Column(
-                children: msg.results!.map((result) {
-                  final disease = result['disease'] as DiseaseInfo;
-                  final confidence =
-                      (result['confidence'] as double).toInt();
-                  final matched =
-                      result['matchedSymptoms'] as List<String>;
-
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: cardColor,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                          color: primaryColor.withValues(alpha: 0.3)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 8,
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.local_hospital,
-                                color: primaryColor, size: 18),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                disease.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: textColor,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: confidence > 50
-                                    ? Colors.orange.withValues(alpha: 0.15)
-                                    : Colors.green.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                '$confidence% match',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: confidence > 50
-                                      ? Colors.orange.shade700
-                                      : Colors.green.shade700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          disease.description,
-                          style: TextStyle(
-                              color: textColor.withValues(alpha: 0.7),
-                              fontSize: 12),
-                        ),
-                        const SizedBox(height: 6),
-                        Wrap(
-                          spacing: 4,
-                          runSpacing: 4,
-                          children: matched
-                              .map((s) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 3),
-                                    decoration: BoxDecoration(
-                                      color: primaryColor.withValues(alpha: 0.1),
-                                      borderRadius:
-                                          BorderRadius.circular(10),
-                                    ),
-                                    child: Text(s,
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: primaryColor)),
-                                  ))
-                              .toList(),
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            const Icon(Icons.shield_outlined,
-                                size: 13, color: Colors.green),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: Text(
-                                disease.prevention,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.green.shade700),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: primaryColor),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text("Analyzing...", style: TextStyle(color: Colors.grey)),
+                ],
               ),
             ),
+          if (_state != _ChatState.askGender) _buildInputArea(primaryColor, hintText),
         ],
       ),
     );
   }
 
-  Widget _buildTypingIndicator(Color cardColor) {
+  // ─── User message bubble ───
+  Widget _buildUserBubble(String message, Color primaryColor) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(4),
+                ),
+              ),
+              child: Text(
+                message,
+                style: const TextStyle(color: Colors.white, fontSize: 15),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: Colors.grey[300],
+            child: const Icon(Icons.person, color: Colors.white, size: 20),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Bot text bubble ───
+  Widget _buildBotBubble(String text, Color primaryColor) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            child: const Icon(Icons.medical_services,
-                color: Colors.white, size: 16),
+            backgroundColor: primaryColor,
+            child: const Icon(Icons.health_and_safety, color: Colors.white, size: 18),
           ),
           const SizedBox(width: 8),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: cardColor,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(18),
-                topRight: Radius.circular(18),
-                bottomRight: Radius.circular(18),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 6,
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              decoration: const BoxDecoration(
+                color: Color(0xFFEBEBEB),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(4),
                 ),
-              ],
+              ),
+              child: Text(
+                text,
+                style: const TextStyle(color: Colors.black87, fontSize: 15, height: 1.4),
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Error bubble (visually distinct) ───
+  Widget _buildErrorBubble(String text, Color primaryColor) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CircleAvatar(
+            radius: 16,
+            backgroundColor: Color(0xFFEF4444),
+            child: Icon(Icons.warning_rounded, color: Colors.white, size: 18),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFEF2F2),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(4),
+                ),
+                border: Border.all(color: const Color(0xFFFCA5A5)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(Icons.error_outline_rounded, color: Color(0xFFDC2626), size: 20),
+                      SizedBox(width: 6),
+                      Text(
+                        "Couldn't analyze",
+                        style: TextStyle(
+                          color: Color(0xFFDC2626),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    text,
+                    style: TextStyle(color: Colors.grey[800], fontSize: 14, height: 1.4),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Gender selection options ───
+  Widget _buildGenderOptions(String label, Color primaryColor) {
+    final bool alreadySelected = _state != _ChatState.askGender;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: primaryColor,
+            child: const Icon(Icons.health_and_safety, color: Colors.white, size: 18),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _dot(0),
-                _dot(200),
-                _dot(400),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFEBEBEB),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(4),
+                    ),
+                  ),
+                  child: Text(
+                    label,
+                    style: const TextStyle(color: Colors.black87, fontSize: 15, height: 1.4),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    _buildOptionButton(
+                      icon: Icons.male,
+                      label: "Male",
+                      color: const Color(0xFF3B82F6),
+                      onTap: alreadySelected ? null : () => _selectGender("Male"),
+                      disabled: alreadySelected,
+                    ),
+                    const SizedBox(width: 10),
+                    _buildOptionButton(
+                      icon: Icons.female,
+                      label: "Female",
+                      color: const Color(0xFFEC4899),
+                      onTap: alreadySelected ? null : () => _selectGender("Female"),
+                      disabled: alreadySelected,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -472,127 +496,322 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     );
   }
 
-  Widget _dot(int delay) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.3, end: 1.0),
-      duration: Duration(milliseconds: 600 + delay),
-      builder: (context, value, child) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 2),
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: Theme.of(context)
-                .colorScheme
-                .primary
-                .withValues(alpha: value),
-            shape: BoxShape.circle,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildQuickChips(bool isDark, Color primaryColor) {
-    final chips = [
-      '🤒 Fever & headache',
-      '😷 Cough & sore throat',
-      '😴 Fatigue & dizziness',
-      '🤢 Stomach pain & nausea',
-      '🫁 Shortness of breath',
-    ];
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+  Widget _buildOptionButton({
+    required IconData icon,
+    required String label,
+    required Color color,
+    VoidCallback? onTap,
+    bool disabled = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          color: disabled ? Colors.grey[300] : color,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: disabled ? [] : [
+            BoxShadow(
+              color: color.withValues(alpha: 0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
         child: Row(
-          children: chips
-              .map((chip) => GestureDetector(
-                    onTap: () => _handleUserMessage(chip),
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 8),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: primaryColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: primaryColor.withValues(alpha: 0.3)),
-                      ),
-                      child: Text(
-                        chip,
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ))
-              .toList(),
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: Colors.white, size: 20),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildInputField(
-      Color cardColor, Color textColor, bool isDark, Color primaryColor) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: cardColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
+  // ─── Analysis result card ───
+  Widget _buildAnalysisCard(PredictionResult result, String severity, Color primaryColor) {
+    Color severityColor;
+    IconData severityIcon;
+    String severityDescription;
+
+    switch (severity) {
+      case "High":
+        severityColor = const Color(0xFFEF4444);
+        severityIcon = Icons.warning_rounded;
+        severityDescription = "Your symptoms indicate a potentially serious condition. "
+            "We strongly recommend seeing a doctor as soon as possible.";
+        break;
+      case "Medium":
+        severityColor = const Color(0xFFF59E0B);
+        severityIcon = Icons.info_rounded;
+        severityDescription = "Your symptoms suggest a moderate concern. "
+            "It's a good idea to schedule a doctor visit to be safe.";
+        break;
+      default:
+        severityColor = const Color(0xFF22C55E);
+        severityIcon = Icons.check_circle_rounded;
+        severityDescription = "Your symptoms appear to be minor. "
+            "Monitor them and consult a doctor if they persist or worsen.";
+        break;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: primaryColor,
+            child: const Icon(Icons.health_and_safety, color: Colors.white, size: 18),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(4),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.06),
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ── Severity header ──
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: severityColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(severityIcon, color: Colors.white, size: 28),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "$severity Severity",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                severity == "High"
+                                    ? "Immediate attention recommended"
+                                    : severity == "Medium"
+                                        ? "Doctor visit recommended"
+                                        : "Monitor your symptoms",
+                                style: const TextStyle(color: Colors.white70, fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // ── Body ──
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Severity explanation
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: severityColor.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: severityColor.withValues(alpha: 0.2)),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(Icons.lightbulb_outline, color: severityColor, size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  severityDescription,
+                                  style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontSize: 13,
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+
+
+                        // Possible conditions
+                        _buildCardSectionTitle("🏥  Possible Conditions"),
+                        const SizedBox(height: 8),
+                        ...result.predictions.map((p) {
+                          final percent = (p.probability * 100).toStringAsFixed(1);
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        p.disease,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: LinearProgressIndicator(
+                                          value: p.probability,
+                                          backgroundColor: Colors.grey[200],
+                                          color: _getBarColor(p.probability),
+                                          minHeight: 6,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  "$percent%",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: _getBarColor(p.probability),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+
+                        const SizedBox(height: 12),
+
+                        // Disclaimer
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(Icons.info_outline, size: 16, color: Colors.grey[500]),
+                              const SizedBox(width: 6),
+                              Expanded(
+                                child: Text(
+                                  "This is a preliminary analysis only and not a medical diagnosis. Please consult a healthcare professional.",
+                                  style: TextStyle(color: Colors.grey[600], fontSize: 11, height: 1.3),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCardSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Colors.black87,
+      ),
+    );
+  }
+
+  Color _getBarColor(double probability) {
+    if (probability >= 0.5) return const Color(0xFFEF4444);
+    if (probability >= 0.2) return const Color(0xFFF59E0B);
+    return const Color(0xFF22C55E);
+  }
+
+  // ─── Input area ───
+  Widget _buildInputArea(Color primaryColor, String hintText) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
       child: SafeArea(
-        top: false,
         child: Row(
           children: [
             Expanded(
-              child: TextField(
-                controller: _controller,
-                style: TextStyle(color: textColor),
-                onSubmitted: _handleUserMessage,
-                decoration: InputDecoration(
-                  hintText: 'Describe your symptoms...',
-                  hintStyle: TextStyle(color: textColor.withValues(alpha: 0.4)),
-                  filled: true,
-                  fillColor: isDark
-                      ? Colors.white.withValues(alpha: 0.07)
-                      : const Color(0xFFF1F5F9),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide: BorderSide.none,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: Colors.grey[300]!),
+                ),
+                child: TextField(
+                  controller: _controller,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: (_) => _handleSend(),
+                  decoration: InputDecoration(
+                    hintText: hintText,
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                    border: InputBorder.none,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 18, vertical: 12),
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
             GestureDetector(
-              onTap: () => _handleUserMessage(_controller.text),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [primaryColor, primaryColor.withValues(alpha: 0.8)],
-                  ),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: primaryColor.withValues(alpha: 0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child:
-                    const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+              onTap: _isLoading ? null : _handleSend,
+              child: CircleAvatar(
+                radius: 24,
+                backgroundColor: primaryColor,
+                child: const Icon(Icons.send, color: Colors.white, size: 20),
               ),
             ),
           ],
