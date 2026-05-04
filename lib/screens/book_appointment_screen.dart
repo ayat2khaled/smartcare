@@ -1,6 +1,6 @@
 import 'package:first_project/components/custom_input_field.dart';
 import 'package:first_project/components/date_item.dart';
-import 'package:first_project/components/item_slot.dart';
+import 'package:first_project/components/time_slot.dart';
 import 'package:first_project/components/queue_status_card.dart';
 import 'package:first_project/models/doctor_model.dart';
 import 'package:first_project/screens/select_package_screen.dart';
@@ -19,6 +19,10 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   String selectedTime = "";
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+
+  String? _nameError;
+  String? _phoneError;
+  bool _hasTriedSubmit = false;
 
   static const _dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -52,6 +56,46 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   void _selectFirstTimeForDate(DateTime date) {
     final times = _getTimesForDate(date);
     selectedTime = times.isNotEmpty ? times.first : "";
+  }
+
+  // ── Validation helpers ──────────────────────────────────────────────
+
+  String? _validateName(String value) {
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) return 'Please enter your full name';
+    if (trimmed.length < 3) return 'Name must be at least 3 characters';
+    if (!RegExp(r'^[a-zA-Z\s\u0600-\u06FF]+$').hasMatch(trimmed)) {
+      return 'Name can only contain letters';
+    }
+    return null;
+  }
+
+  String? _validatePhone(String value) {
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) return 'Please enter your phone number';
+    if (!RegExp(r'^01[0-9]{9}$').hasMatch(trimmed)) {
+      return 'Enter a valid 11-digit number starting with 01';
+    }
+    return null;
+  }
+
+  void _onNameChanged(String value) {
+    if (_hasTriedSubmit) setState(() => _nameError = _validateName(value));
+  }
+
+  void _onPhoneChanged(String value) {
+    if (_hasTriedSubmit) setState(() => _phoneError = _validatePhone(value));
+  }
+
+  bool _validateAll() {
+    _hasTriedSubmit = true;
+    final nameErr = _validateName(nameController.text);
+    final phoneErr = _validatePhone(phoneController.text);
+    setState(() {
+      _nameError = nameErr;
+      _phoneError = phoneErr;
+    });
+    return nameErr == null && phoneErr == null;
   }
 
   @override
@@ -130,16 +174,27 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                     ),
                   ),
             const SizedBox(height: 20),
-            CustomInputField(hint: "Full Name", controller: nameController),
+            CustomInputField(
+              hint: "Full Name",
+              controller: nameController,
+              errorText: _nameError,
+              onChanged: _onNameChanged,
+            ),
             const SizedBox(height: 10),
-            CustomInputField(hint: "Phone Number", controller: phoneController, isNumber: true),
+            CustomInputField(
+              hint: "Phone Number (01XXXXXXXXX)",
+              controller: phoneController,
+              isNumber: true,
+              errorText: _phoneError,
+              onChanged: _onPhoneChanged,
+            ),
             const SizedBox(height: 20),
             Builder(
               builder: (context) {
                 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 String formattedDate = "${months[selectedDate.month - 1]} ${selectedDate.day}, ${selectedDate.year}";
                 String displayDateTime = "$formattedDate - ${selectedTime.isEmpty ? 'TBD' : selectedTime}";
-                
+                //seed = (10 * 1 * 2026) + hash("10:00 AM")
                 int seed = (selectedDate.day * selectedDate.month * selectedDate.year) + selectedTime.hashCode.abs();
                 int queueNumber = (seed % 8) + 1;
                 int waitTime = (queueNumber * 8) + (seed % 5);
@@ -156,16 +211,13 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                if (nameController.text.isEmpty || phoneController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter Name and Phone Number")));
-                  return;
-                }
+                if (!_validateAll()) return;
                 Navigator.push(context, MaterialPageRoute(builder: (_) => SelectPackageScreen(
                   doctor: widget.doctor,
                   selectedDate: selectedDate,
                   selectedTime: selectedTime.isEmpty ? 'TBD' : selectedTime,
-                  patientName: nameController.text,
-                  patientPhone: phoneController.text,
+                  patientName: nameController.text.trim(),
+                  patientPhone: phoneController.text.trim(),
                   remindMe: isReminderOn,
                 )));
               },

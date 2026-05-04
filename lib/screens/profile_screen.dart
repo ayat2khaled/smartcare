@@ -108,21 +108,7 @@ class ProfileScreen extends StatelessWidget {
                           "images/WhatsApp Image 2026-03-08 at 2.15.02 AM.jpeg"),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isDark
-                            ? const Color(0xFF0F172A)
-                            : Colors.white,
-                        width: 2,
-                      ),
-                    ),
-                    child: const Icon(Icons.edit_outlined,
-                        color: Colors.white, size: 16),
-                  ),
+                  
                 ],
               ),
             ),

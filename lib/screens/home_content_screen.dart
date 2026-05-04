@@ -245,12 +245,12 @@ class _HomeContentState extends State<HomeContent> {
                   children: [
                     DoctorMainCard(
                       doctor: popularDoctors[0],
-                      date: "12 July 2025 / 09:00 am",
+                      date: "12 May 2026 / 09:00 am",
                     ),
                     const SizedBox(width: 15),
                     DoctorMainCard(
                       doctor: popularDoctors[1],
-                      date: "15 July 2025 / 02:00 pm",
+                      date: "15 May 2026 / 02:00 pm",
                     ),
                   ],
                 ),

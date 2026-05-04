@@ -362,25 +362,7 @@ class _EmergencyScreenState extends State<EmergencyScreen>
                   ),
                 ),
               )
-            else if (sortedHospitals.isEmpty)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(40),
-                  child: Column(
-                    children: [
-                      Icon(Icons.local_hospital_outlined, size: 64, color: subTextColor.withValues(alpha: 0.4)),
-                      const SizedBox(height: 16),
-                      Text("No hospitals nearby",
-                          style: TextStyle(color: subTextColor, fontSize: 16, fontWeight: FontWeight.w500)),
-                      const SizedBox(height: 6),
-                      Text("We couldn't find any hospitals within 50 km of your location.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: subTextColor.withValues(alpha: 0.7), fontSize: 13)),
-                    ],
-                  ),
-                ),
-              )
-            else ...[
+            else  ...[
               // Ambulance numbers header
               SliverToBoxAdapter(
                 child: Padding(

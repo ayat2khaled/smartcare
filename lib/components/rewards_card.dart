@@ -1,7 +1,5 @@
 import 'package:first_project/providers/rewards_provider.dart';
 import 'package:first_project/screens/home_screen.dart';
-//import 'package:first_project/screens/records_screen.dart';
-//import 'package:first_project/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +43,7 @@ class MainRewardsCard extends StatelessWidget {
           const SizedBox(height: 25),
           ElevatedButton(
   onPressed: () {
-  
+
 
     Navigator.pushAndRemoveUntil(
       context,

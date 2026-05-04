@@ -42,12 +42,7 @@ class _BookingScreenState extends State<BookingScreen> {
             style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(Icons.search, color: textColor),
-            ),
-          ],
+          
           bottom: TabBar(
             labelColor: primaryColor,
             unselectedLabelColor: subTextColor,

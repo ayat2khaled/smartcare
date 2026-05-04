@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomInputField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final bool isNumber;
+  final String? errorText;
+  final ValueChanged<String>? onChanged;
 
-  const CustomInputField({super.key, required this.hint, required this.controller, this.isNumber = false});
+  const CustomInputField({
+    super.key,
+    required this.hint,
+    required this.controller,
+    this.isNumber = false,
+    this.errorText,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +30,22 @@ class CustomInputField extends StatelessWidget {
       controller: controller,
       keyboardType: isNumber ? TextInputType.phone : TextInputType.text,
       style: TextStyle(color: textColor),
+      onChanged: onChanged,
+      inputFormatters: isNumber
+          ? [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(11)]
+          : [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s\u0600-\u06FF]'))],
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(color: subTextColor),
         filled: true,
         fillColor: cardColor,
+        errorText: errorText,
+        errorStyle: const TextStyle(fontSize: 12),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: primaryColor)),
+        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.redAccent)),
+        focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.redAccent)),
       ),
     );
   }

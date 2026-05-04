@@ -174,7 +174,7 @@ class OrderSuccessScreen extends StatelessWidget {
                       rewards.deductPoints(cart.appliedPoints);
                     }
 
-                    // 2. Add 50 reward points for completing an order
+                    // 2. Add 20 reward points for completing an order
                     rewards.addPoints(20);
 
                     // 3. Clear cart

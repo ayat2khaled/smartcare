@@ -27,7 +27,7 @@ class SelectPackageScreen extends StatefulWidget {
 
 class _SelectPackageScreenState extends State<SelectPackageScreen> {
   String selectedPackageId = "message";
-  String selectedPaymentMethod = "Cash";
+  String selectedPaymentMethod = "Visa";
   late final List<PackageModel> availablePackages;
 
   @override

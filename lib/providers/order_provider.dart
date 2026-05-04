@@ -63,7 +63,7 @@ class OrderProvider with ChangeNotifier {
     String orderId,
     NotificationProvider notificationProvider,
   ) {
-    Future.delayed(const Duration(seconds: 15), () {
+    Future.delayed(const Duration(seconds: 20), () {
       final index = _orders.indexWhere((o) => o.orderId == orderId);
       if (index != -1 && _orders[index].status == "Pending") {
         _orders[index].status = "Delivered";
