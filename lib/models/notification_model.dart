@@ -4,7 +4,7 @@ class NotificationModel {
   final String subtitle;
   final String userImage;
   final String time;
-  final String? attachment; // للملفات مثل PDF
+  final String? attachment; 
 
   NotificationModel({
     required this.title,
