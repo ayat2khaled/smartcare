@@ -4,6 +4,7 @@ import 'package:first_project/components/time_slot.dart';
 import 'package:first_project/components/queue_status_card.dart';
 import 'package:first_project/models/doctor_model.dart';
 import 'package:first_project/screens/select_package_screen.dart';
+import 'package:first_project/services/slot_service.dart';
 import 'package:flutter/material.dart';
 
 class BookAppointmentScreen extends StatefulWidget {
@@ -24,6 +25,10 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   String? _phoneError;
   bool _hasTriedSubmit = false;
 
+  /// Set of time strings that are already booked for the selected date.
+  Set<String> _bookedTimes = {};
+  bool _isLoadingSlots = false;
+
   static const _dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   @override
@@ -42,8 +47,8 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
     }
     if (!dateSet) selectedDate = DateTime.now();
 
-    // Pick first available time for that day
-    _selectFirstTimeForDate(selectedDate);
+    // Load booked slots then pick first available time
+    _loadBookedSlotsAndSelectTime(selectedDate);
   }
 
   String _getDayName(DateTime date) => _dayNames[date.weekday - 1];
@@ -53,9 +58,32 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
     return widget.doctor.schedule[dayName] ?? [];
   }
 
-  void _selectFirstTimeForDate(DateTime date) {
+  /// Loads booked slots from Firestore and auto-selects the first available time.
+  Future<void> _loadBookedSlotsAndSelectTime(DateTime date) async {
+    setState(() => _isLoadingSlots = true);
+
+    final booked = await SlotService.getBookedTimes(
+      doctorName: widget.doctor.name,
+      date: date,
+    );
+
+    if (!mounted) return;
+
     final times = _getTimesForDate(date);
-    selectedTime = times.isNotEmpty ? times.first : "";
+    // Pick the first time that is NOT booked
+    String firstAvailable = "";
+    for (final t in times) {
+      if (!booked.contains(t)) {
+        firstAvailable = t;
+        break;
+      }
+    }
+
+    setState(() {
+      _bookedTimes = booked.toSet();
+      selectedTime = firstAvailable;
+      _isLoadingSlots = false;
+    });
   }
 
   // ── Validation helpers ──────────────────────────────────────────────
@@ -144,8 +172,8 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                       if (!isDisabled) {
                         setState(() {
                           selectedDate = date;
-                          _selectFirstTimeForDate(date);
                         });
+                        _loadBookedSlotsAndSelectTime(date);
                       }
                     },
                   );
@@ -155,24 +183,35 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             const SizedBox(height: 20),
             Text("Select Time", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: primaryColor)),
             const SizedBox(height: 10),
-            availableTimesForDay.isEmpty
-                ? Text("No available times for this day", style: TextStyle(color: Colors.grey.shade500))
-                : SizedBox(
+            _isLoadingSlots
+                ? const SizedBox(
                     height: 50,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: availableTimesForDay.length,
-                      separatorBuilder: (context, index) => const SizedBox(width: 10),
-                      itemBuilder: (context, index) {
-                        final time = availableTimesForDay[index];
-                        return TimeSlot(
-                          time: time,
-                          isSelected: selectedTime == time,
-                          onTap: () => setState(() => selectedTime = time),
-                        );
-                      },
-                    ),
-                  ),
+                    child: Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))),
+                  )
+                : availableTimesForDay.isEmpty
+                    ? Text("No available times for this day", style: TextStyle(color: Colors.grey.shade500))
+                    : SizedBox(
+                        height: 50,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: availableTimesForDay.length,
+                          separatorBuilder: (context, index) => const SizedBox(width: 10),
+                          itemBuilder: (context, index) {
+                            final time = availableTimesForDay[index];
+                            final isBooked = _bookedTimes.contains(time);
+                            return TimeSlot(
+                              time: isBooked ? "$time ❌" : time,
+                              isSelected: selectedTime == time && !isBooked,
+                              isDisabled: isBooked,
+                              onTap: () {
+                                if (!isBooked) {
+                                  setState(() => selectedTime = time);
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      ),
             const SizedBox(height: 20),
             CustomInputField(
               hint: "Full Name",

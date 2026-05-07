@@ -3,6 +3,7 @@ import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
 import 'package:first_project/providers/order_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
+import 'package:first_project/providers/notification_provider.dart';
 import 'package:first_project/screens/home_screen.dart';
 import 'package:first_project/screens/onboarding_1_screen.dart';
 import 'package:first_project/screens/sign_in_screen.dart';
@@ -58,10 +59,12 @@ class _SplashScreenState extends State<SplashScreen>
       final rewardsProvider = Provider.of<RewardsProvider>(context, listen: false);
       final orderProvider = Provider.of<OrderProvider>(context, listen: false);
       final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+      final notifProvider = Provider.of<NotificationProvider>(context, listen: false);
 
       await rewardsProvider.loadForUser(email);
       await orderProvider.loadForUser(email);
       await bookingProvider.loadForUser(email);
+      await notifProvider.loadForUser(email);
       destination = HomeScreen();
     } else if (authProvider.hasRegisteredUsers) {
       // Has an account but not logged in → go to Sign In

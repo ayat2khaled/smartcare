@@ -73,10 +73,16 @@ class BookingCard extends StatelessWidget {
   height: 80,
   child: ClipRRect(
     borderRadius: BorderRadius.circular(10),
-    child: Image.network(
-      image,
-      fit: BoxFit.cover,
-    ),
+    child: image.startsWith('http')
+        ? Image.network(
+            image,
+            fit: BoxFit.cover,
+            errorBuilder: (_, error, stackTrace) => Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
+          )
+        : Container(
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            child: Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
+          ),
   ),
 ),
               const SizedBox(width: 10),

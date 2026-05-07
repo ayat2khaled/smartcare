@@ -42,7 +42,7 @@
     },
     {
       "name": "Nour El Shorouk Hospital",
-      "image": "https://images.healtheg.com//Images/1074/260988803_4411442798954951_7177920095099009103_n31ac77b6-b7c9-4b9d-977c-118f76fe96f1.jpg",
+      "image": "https://images.healtheg.com/Images/1074/260988803_4411442798954951_7177920095099009103_n31ac77b6-b7c9-4b9d-977c-118f76fe96f1.jpg",
       "address": "El Shorouk City, Egypt",
       "distance_km": 4.0,
       "rating": 4.3,
@@ -82,7 +82,7 @@
     },
     {
   "name": "Ibn Sina Specialized Hospital",
-  "image": "https://images.healtheg.com//Images/53504/Screenshot_17fb8b6fa3-56c9-4376-8260-154bf8c56b10.jpg",
+  "image": "https://images.healtheg.com/Images/53504/Screenshot_17fb8b6fa3-56c9-4376-8260-154bf8c56b10.jpg",
   "address": "El-Gaish Street, Tanta Qism 2, Tanta, Gharbia, Egypt",
   "distance_km": 2.6,
   "rating": 4.3,
@@ -262,7 +262,7 @@
 }, 
 {
   "name": "Al Safwa Hospital",
-  "image": "https://images.healtheg.com//Images/53525/Screenshot_47db41f1d-5dac-4c7a-893d-78ac22149387.jpg",
+  "image": "https://images.healtheg.com/Images/53525/Screenshot_47db41f1d-5dac-4c7a-893d-78ac22149387.jpg",
   "address": "First District, Omar Ibn El-Khattab Street, 6th of October City, Giza, Egypt",
   "distance_km": 4.1,
   "rating": 3.1,
@@ -284,6 +284,7 @@
   "name": "El Nada Hospital Sheikh Zayed",
   "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5vciXPtbNZ0fBMcCHvDZDk7SRbpaq2n9LQQ&s",
   "address": "Westown, SODIC, Sheikh Zayed City, Giza, Egypt",
+  "distance_km": 4.5,
   "rating": 4.0,
   "phone": "+20 103 337 6450",
   "ambulance_number": "123",
@@ -303,6 +304,7 @@
   "name": "Global Care Hospital",
   "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTebaCmErfTG2a2mOoPIaueg1zC6aAlYStbQA&s",
   "address": "Behind Al Shabab Road, Sheikh Zayed City, Giza, Egypt",
+  "distance_km": 3.2,
   "rating": 3.5,
   "phone": "+20 2 3837 2266",
   "ambulance_number": "123",
@@ -340,7 +342,7 @@
 },
 {
   "name": "Al-Azhar University Hospital (New Damietta)",
-  "image": "https://images.healtheg.com//Images/53687/Screenshot_5a5884c1b-1b32-4ce1-96d6-a3542cacebd4.jpg",
+  "image": "https://images.healtheg.com/Images/53687/Screenshot_5a5884c1b-1b32-4ce1-96d6-a3542cacebd4.jpg",
   "address": "First District, Sixth Neighborhood, Industrial Road, New Damietta City, Damietta, Egypt",
   "distance_km": 6.8,
   "rating": 4.2,

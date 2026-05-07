@@ -2,9 +2,11 @@ import 'package:first_project/screens/home_screen.dart';
 import 'package:first_project/models/doctor_model.dart';
 import 'package:first_project/models/booking_model.dart';
 import 'package:first_project/models/notification_model.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
 import 'package:first_project/providers/notification_provider.dart';
+import 'package:first_project/services/slot_service.dart';
 import 'package:first_project/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -242,6 +244,15 @@ class BookingSuccessScreen extends StatelessWidget {
                       availableDays: doctor.availableDays,
                       schedule: doctor.schedule,
                     ),
+                  );
+
+                  // Lock the slot in Firestore so other users cannot book it
+                  final userEmail = Provider.of<AuthProvider>(context, listen: false).userEmail;
+                  SlotService.bookSlot(
+                    doctorName: doctor.name,
+                    date: date,
+                    time: time,
+                    userEmail: userEmail,
                   );
 
                   // Send reminder notification if enabled

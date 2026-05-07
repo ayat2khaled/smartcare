@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
 import 'package:first_project/providers/order_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
+import 'package:first_project/providers/notification_provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -50,10 +51,12 @@ class _SignInFormState extends State<SignInForm> {
       final rewardsProvider = Provider.of<RewardsProvider>(context, listen: false);
       final orderProvider = Provider.of<OrderProvider>(context, listen: false);
       final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+      final notifProvider = Provider.of<NotificationProvider>(context, listen: false);
 
       await rewardsProvider.loadForUser(email);
       await orderProvider.loadForUser(email);
       await bookingProvider.loadForUser(email);
+      await notifProvider.loadForUser(email);
 
       if (!mounted) return;
 

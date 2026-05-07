@@ -1,9 +1,11 @@
 import 'package:first_project/components/booking_card.dart';
 import 'package:first_project/models/booking_model.dart';
 import 'package:first_project/models/notification_model.dart';
+import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
 import 'package:first_project/providers/notification_provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
+import 'package:first_project/services/slot_service.dart';
 import 'package:first_project/utils/top_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -138,6 +140,17 @@ class _BookingScreenState extends State<BookingScreen> {
                           context,
                           listen: false,
                         ).cancelBooking(booking.id);
+
+                        // Release the slot in Firestore
+                        final time = SlotService.extractTimeFromBookingStr(booking.date);
+                        if (time != null) {
+                          SlotService.releaseSlot(
+                            doctorName: booking.name,
+                            dateStr: booking.date,
+                            time: time,
+                          );
+                        }
+
                         Provider.of<NotificationProvider>(
                           context,
                           listen: false,
@@ -202,14 +215,38 @@ class _BookingScreenState extends State<BookingScreen> {
 
     DateTime selectedDate = initialDate;
     String selectedTime = "";
-    final times = booking.schedule[_getDayName(selectedDate)] ?? [];
-    if (times.isNotEmpty) selectedTime = times.first;
+    Set<String> bookedTimes = {};
+    bool isLoadingSlots = true;
 
     showDialog(
       context: context,
       builder: (ctx) {
         return StatefulBuilder(
           builder: (ctx, setDialogState) {
+            // Load booked slots when dialog first opens or date changes
+            if (isLoadingSlots) {
+              SlotService.getBookedTimes(
+                doctorName: booking.name,
+                date: selectedDate,
+              ).then((booked) {
+                if (ctx.mounted) {
+                  final times = booking.schedule[_getDayName(selectedDate)] ?? [];
+                  String firstAvailable = "";
+                  for (final t in times) {
+                    if (!booked.contains(t)) {
+                      firstAvailable = t;
+                      break;
+                    }
+                  }
+                  setDialogState(() {
+                    bookedTimes = booked.toSet();
+                    selectedTime = firstAvailable;
+                    isLoadingSlots = false;
+                  });
+                }
+              });
+            }
+
             final availableTimes =
                 booking.schedule[_getDayName(selectedDate)] ?? [];
 
@@ -262,11 +299,9 @@ class _BookingScreenState extends State<BookingScreen> {
                                 : () {
                                     setDialogState(() {
                                       selectedDate = date;
-                                      final newTimes =
-                                          booking.schedule[dayName] ?? [];
-                                      selectedTime = newTimes.isNotEmpty
-                                          ? newTimes.first
-                                          : "";
+                                      selectedTime = "";
+                                      bookedTimes = {};
+                                      isLoadingSlots = true;
                                     });
                                   },
                             child: Container(
@@ -328,55 +363,74 @@ class _BookingScreenState extends State<BookingScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    availableTimes.isEmpty
-                        ? Text(
-                            "No available times",
-                            style: TextStyle(color: Colors.grey.shade500),
+                    isLoadingSlots
+                        ? const SizedBox(
+                            height: 40,
+                            child: Center(
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(strokeWidth: 2),
+                              ),
+                            ),
                           )
-                        : Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: availableTimes.map((time) {
-                              final isSelected = selectedTime == time;
-                              return GestureDetector(
-                                onTap: () {
-                                  setDialogState(() {
-                                    selectedTime = time;
-                                  });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14,
-                                    vertical: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? primaryColor
-                                        : cardColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: isSelected
-                                        ? Border.all(
-                                            color: primaryColor,
-                                            width: 2,
-                                          )
-                                        : null,
-                                  ),
-                                  child: Text(
-                                    time,
-                                    style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : textColor,
-                                      fontWeight: isSelected
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                      fontSize: 13,
+                        : availableTimes.isEmpty
+                            ? Text(
+                                "No available times",
+                                style: TextStyle(color: Colors.grey.shade500),
+                              )
+                            : Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: availableTimes.map((time) {
+                                  final isBooked = bookedTimes.contains(time);
+                                  final isSelected = selectedTime == time && !isBooked;
+                                  return GestureDetector(
+                                    onTap: isBooked
+                                        ? null
+                                        : () {
+                                            setDialogState(() {
+                                              selectedTime = time;
+                                            });
+                                          },
+                                    child: Opacity(
+                                      opacity: isBooked ? 0.4 : 1.0,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 14,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? primaryColor
+                                              : cardColor,
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: isSelected
+                                              ? Border.all(
+                                                  color: primaryColor,
+                                                  width: 2,
+                                                )
+                                              : null,
+                                        ),
+                                        child: Text(
+                                          isBooked ? "$time ❌" : time,
+                                          style: TextStyle(
+                                            color: isSelected
+                                                ? Colors.white
+                                                : isBooked
+                                                    ? Colors.grey
+                                                    : textColor,
+                                            fontWeight: isSelected
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
+                                  );
+                                }).toList(),
+                              ),
                   ],
                 ),
               ),
@@ -405,6 +459,30 @@ class _BookingScreenState extends State<BookingScreen> {
                           ];
                           final dateStr =
                               "${months[selectedDate.month - 1]} ${selectedDate.day}, ${selectedDate.year}";
+
+                          // 1. Release the OLD slot in Firestore
+                          final oldTime = SlotService.extractTimeFromBookingStr(booking.date);
+                          if (oldTime != null) {
+                            SlotService.releaseSlot(
+                              doctorName: booking.name,
+                              dateStr: booking.date,
+                              time: oldTime,
+                            );
+                          }
+
+                          // 2. Book the NEW slot in Firestore
+                          final userEmail = Provider.of<AuthProvider>(
+                            context,
+                            listen: false,
+                          ).userEmail;
+                          SlotService.bookSlot(
+                            doctorName: booking.name,
+                            date: selectedDate,
+                            time: selectedTime,
+                            userEmail: userEmail,
+                          );
+
+                          // 3. Update local booking
                           Provider.of<BookingProvider>(
                             context,
                             listen: false,
@@ -439,3 +517,4 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 }
+

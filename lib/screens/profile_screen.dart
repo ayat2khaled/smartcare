@@ -7,6 +7,7 @@ import 'package:first_project/providers/auth_provider.dart';
 import 'package:first_project/providers/booking_provider.dart';
 import 'package:first_project/providers/order_provider.dart';
 import 'package:first_project/providers/rewards_provider.dart';
+import 'package:first_project/providers/notification_provider.dart';
 import 'package:first_project/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,7 @@ class ProfileScreen extends StatelessWidget {
             Provider.of<RewardsProvider>(context, listen: false).clearUserData();
             Provider.of<OrderProvider>(context, listen: false).clearUserData();
             Provider.of<BookingProvider>(context, listen: false).clearUserData();
+            Provider.of<NotificationProvider>(context, listen: false).clearUserData();
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const SignIn()),
@@ -129,9 +131,9 @@ class ProfileScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _statChip('${context.watch<BookingProvider>().bookings.length}', 'Appointments', cardColor, textColor,
+                  _statChip('${context.watch<BookingProvider>().bookings.where((b) => b.status == "Upcoming").length}', 'Appointments', cardColor, textColor,
                       subTextColor, primaryColor),
-                  _statChip('${context.watch<OrderProvider>().orders.length}', 'Orders', cardColor, textColor,
+                  _statChip('${context.watch<OrderProvider>().orders.where((o) => o.status == "Pending" || o.status == "Delivered").length}', 'Orders', cardColor, textColor,
                       subTextColor, const Color(0xFF10B981)),
                   _statChip('${context.watch<RewardsProvider>().points}', 'Points', cardColor, textColor,
                       subTextColor, const Color(0xFFF59E0B)),

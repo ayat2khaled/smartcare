@@ -35,7 +35,16 @@ class NotificationCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(radius: 25, backgroundImage: AssetImage(notification.userImage)),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: primaryColor.withValues(alpha: 0.1),
+              backgroundImage: notification.userImage.startsWith('http')
+                  ? NetworkImage(notification.userImage)
+                  : null,
+              child: !notification.userImage.startsWith('http')
+                  ? Icon(Icons.shopping_bag, color: primaryColor)
+                  : null,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
