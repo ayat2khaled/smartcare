@@ -205,6 +205,12 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F6F8);
+    final inputBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final inputFieldBg = isDark ? const Color(0xFF253350) : Colors.grey[100];
+    final inputBorder = isDark ? const Color(0xFF334155) : Colors.grey[300]!;
+    final hintColor = isDark ? const Color(0xFF64748B) : Colors.grey;
 
     String hintText;
     switch (_state) {
@@ -220,7 +226,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6F8),
+      backgroundColor: scaffoldBg,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(55.0),
         child: AppBar(
@@ -293,11 +299,11 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2, color: primaryColor),
                   ),
                   const SizedBox(width: 8),
-                  const Text("Analyzing...", style: TextStyle(color: Colors.grey)),
+                  Text("Analyzing...", style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : Colors.grey)),
                 ],
               ),
             ),
-          if (_state != _ChatState.askGender) _buildInputArea(primaryColor, hintText),
+          if (_state != _ChatState.askGender) _buildInputArea(primaryColor, hintText, isDark, inputBg, inputFieldBg, inputBorder, hintColor),
         ],
       ),
     );
@@ -305,6 +311,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
 
   // ─── User message bubble ───
   Widget _buildUserBubble(String message, Color primaryColor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
@@ -332,7 +339,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
           const SizedBox(width: 8),
           CircleAvatar(
             radius: 16,
-            backgroundColor: Colors.grey[300],
+            backgroundColor: isDark ? const Color(0xFF334155) : Colors.grey[300],
             child: const Icon(Icons.person, color: Colors.white, size: 20),
           ),
         ],
@@ -342,6 +349,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
 
   // ─── Bot text bubble ───
   Widget _buildBotBubble(String text, Color primaryColor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
@@ -356,9 +364,9 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
           Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              decoration: const BoxDecoration(
-                color: Color(0xFFEBEBEB),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEBEBEB),
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -367,7 +375,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
               ),
               child: Text(
                 text,
-                style: const TextStyle(color: Colors.black87, fontSize: 15, height: 1.4),
+                style: TextStyle(color: isDark ? const Color(0xFFE2E8F0) : Colors.black87, fontSize: 15, height: 1.4),
               ),
             ),
           ),
@@ -378,6 +386,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
 
   // ─── Error bubble (visually distinct) ───
   Widget _buildErrorBubble(String text, Color primaryColor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
@@ -393,26 +402,26 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFFEF2F2),
+                color: isDark ? const Color(0xFF2D1B1B) : const Color(0xFFFEF2F2),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                   bottomLeft: Radius.circular(4),
                 ),
-                border: Border.all(color: const Color(0xFFFCA5A5)),
+                border: Border.all(color: isDark ? const Color(0xFF7F1D1D) : const Color(0xFFFCA5A5)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.error_outline_rounded, color: Color(0xFFDC2626), size: 20),
-                      SizedBox(width: 6),
+                      Icon(Icons.error_outline_rounded, color: isDark ? const Color(0xFFF87171) : const Color(0xFFDC2626), size: 20),
+                      const SizedBox(width: 6),
                       Text(
                         "Couldn't analyze",
                         style: TextStyle(
-                          color: Color(0xFFDC2626),
+                          color: isDark ? const Color(0xFFF87171) : const Color(0xFFDC2626),
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
@@ -422,7 +431,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                   const SizedBox(height: 8),
                   Text(
                     text,
-                    style: TextStyle(color: Colors.grey[800], fontSize: 14, height: 1.4),
+                    style: TextStyle(color: isDark ? const Color(0xFFCBD5E1) : Colors.grey[800], fontSize: 14, height: 1.4),
                   ),
                 ],
               ),
@@ -435,6 +444,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
 
   // ─── Gender selection options ───
   Widget _buildGenderOptions(String label, Color primaryColor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bool alreadySelected = _state != _ChatState.askGender;
 
     return Padding(
@@ -454,9 +464,9 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFEBEBEB),
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEBEBEB),
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                       bottomRight: Radius.circular(20),
@@ -465,7 +475,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                   ),
                   child: Text(
                     label,
-                    style: const TextStyle(color: Colors.black87, fontSize: 15, height: 1.4),
+                    style: TextStyle(color: isDark ? const Color(0xFFE2E8F0) : Colors.black87, fontSize: 15, height: 1.4),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -539,6 +549,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
 
   // ─── Analysis result card ───
   Widget _buildAnalysisCard(PredictionResult result, String severity, Color primaryColor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     Color severityColor;
     IconData severityIcon;
     String severityDescription;
@@ -578,7 +589,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
           Flexible(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? const Color(0xFF1E293B) : Colors.white,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
@@ -662,7 +673,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                                 child: Text(
                                   severityDescription,
                                   style: TextStyle(
-                                    color: Colors.grey[800],
+                                    color: isDark ? const Color(0xFFCBD5E1) : Colors.grey[800],
                                     fontSize: 13,
                                     height: 1.4,
                                   ),
@@ -690,10 +701,10 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                                     children: [
                                       Text(
                                         p.disease,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14,
-                                          color: Colors.black87,
+                                          color: isDark ? const Color(0xFFE2E8F0) : Colors.black87,
                                         ),
                                       ),
                                       const SizedBox(height: 4),
@@ -701,7 +712,7 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                                         borderRadius: BorderRadius.circular(4),
                                         child: LinearProgressIndicator(
                                           value: p.probability,
-                                          backgroundColor: Colors.grey[200],
+                                          backgroundColor: isDark ? const Color(0xFF334155) : Colors.grey[200],
                                           color: _getBarColor(p.probability),
                                           minHeight: 6,
                                         ),
@@ -729,18 +740,18 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.grey[50],
+                            color: isDark ? const Color(0xFF253350) : Colors.grey[50],
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.info_outline, size: 16, color: Colors.grey[500]),
+                              Icon(Icons.info_outline, size: 16, color: isDark ? const Color(0xFF64748B) : Colors.grey[500]),
                               const SizedBox(width: 6),
                               Expanded(
                                 child: Text(
                                   "This is a preliminary analysis only and not a medical diagnosis. Please consult a healthcare professional.",
-                                  style: TextStyle(color: Colors.grey[600], fontSize: 11, height: 1.3),
+                                  style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : Colors.grey[600], fontSize: 11, height: 1.3),
                                 ),
                               ),
                             ],
@@ -759,12 +770,13 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
   }
 
   Widget _buildCardSectionTitle(String title) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,
-        color: Colors.black87,
+        color: isDark ? const Color(0xFFE2E8F0) : Colors.black87,
       ),
     );
   }
@@ -776,11 +788,11 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
   }
 
   // ─── Input area ───
-  Widget _buildInputArea(Color primaryColor, String hintText) {
+  Widget _buildInputArea(Color primaryColor, String hintText, bool isDark, Color inputBg, Color? inputFieldBg, Color inputBorder, Color hintColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: inputBg,
       ),
       child: SafeArea(
         child: Row(
@@ -788,17 +800,18 @@ class _MedicalChatScreenState extends State<MedicalChatScreen> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: inputFieldBg,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Colors.grey[300]!),
+                  border: Border.all(color: inputBorder),
                 ),
                 child: TextField(
                   controller: _controller,
                   textInputAction: TextInputAction.send,
                   onSubmitted: (_) => _handleSend(),
+                  style: TextStyle(color: isDark ? const Color(0xFFE2E8F0) : Colors.black87),
                   decoration: InputDecoration(
                     hintText: hintText,
-                    hintStyle: const TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(color: hintColor),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                     border: InputBorder.none,
                   ),
