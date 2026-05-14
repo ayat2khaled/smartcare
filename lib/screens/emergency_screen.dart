@@ -1,7 +1,7 @@
 
-import 'package:first_project/models/home_screen_model.dart';
-import 'package:first_project/services/data_service.dart';
-import 'package:first_project/screens/hospital_screen.dart';
+import 'package:smartcare/models/home_screen_model.dart';
+import 'package:smartcare/services/data_service.dart';
+import 'package:smartcare/screens/hospital_screen.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyScreen extends StatefulWidget {

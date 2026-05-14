@@ -1,4 +1,4 @@
-import 'package:first_project/models/home_screen_model.dart';
+import 'package:smartcare/models/home_screen_model.dart';
 import 'package:flutter/material.dart';
 
 class HospitalCard extends StatelessWidget {

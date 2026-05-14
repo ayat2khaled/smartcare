@@ -1,4 +1,4 @@
-import 'package:first_project/models/rewards_model.dart';
+import 'package:smartcare/models/rewards_model.dart';
 import 'package:flutter/material.dart';
 
 class EarnPointTile extends StatelessWidget {

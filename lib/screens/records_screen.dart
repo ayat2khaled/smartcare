@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:first_project/components/records_card.dart';
-import 'package:first_project/models/records_model.dart';
-import 'package:first_project/providers/auth_provider.dart';
+import 'package:smartcare/components/records_card.dart';
+import 'package:smartcare/models/records_model.dart';
+import 'package:smartcare/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

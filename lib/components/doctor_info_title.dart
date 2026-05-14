@@ -1,4 +1,4 @@
-import 'package:first_project/models/doctor_model.dart';
+import 'package:smartcare/models/doctor_model.dart';
 import 'package:flutter/material.dart';
 
 class DoctorInfoTile extends StatelessWidget {

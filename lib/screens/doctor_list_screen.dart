@@ -1,6 +1,6 @@
-import 'package:first_project/components/doctor_card.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/services/data_service.dart';
+import 'package:smartcare/components/doctor_card.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/services/data_service.dart';
 import 'package:flutter/material.dart';
 
 class DoctorListScreen extends StatefulWidget {

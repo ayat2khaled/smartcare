@@ -1,5 +1,5 @@
-import 'package:first_project/providers/rewards_provider.dart';
-import 'package:first_project/screens/home_screen.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
+import 'package:smartcare/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

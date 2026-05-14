@@ -1,5 +1,5 @@
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/screens/doctor_profile_screen.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/screens/doctor_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HospitalDoctorCard extends StatelessWidget {

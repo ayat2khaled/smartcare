@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:first_project/providers/auth_provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
-import 'package:first_project/providers/order_provider.dart';
-import 'package:first_project/providers/booking_provider.dart';
-import 'package:first_project/providers/notification_provider.dart';
-import 'package:first_project/screens/home_screen.dart';
-import 'package:first_project/screens/onboarding_1_screen.dart';
-import 'package:first_project/screens/sign_in_screen.dart';
+import 'package:smartcare/providers/auth_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
+import 'package:smartcare/providers/booking_provider.dart';
+import 'package:smartcare/providers/notification_provider.dart';
+import 'package:smartcare/screens/home_screen.dart';
+import 'package:smartcare/screens/onboarding_1_screen.dart';
+import 'package:smartcare/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

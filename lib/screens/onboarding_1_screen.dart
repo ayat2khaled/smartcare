@@ -1,8 +1,8 @@
-import 'package:first_project/components/onboarding_card.dart';
-import 'package:first_project/models/onboarding_model.dart';
-import 'package:first_project/screens/sign_in_screen.dart';
+import 'package:smartcare/components/onboarding_card.dart';
+import 'package:smartcare/models/onboarding_model.dart';
+import 'package:smartcare/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:first_project/screens/onboarding_2_screen.dart';
+import 'package:smartcare/screens/onboarding_2_screen.dart';
 
 class Onboarding1 extends StatelessWidget {
   const Onboarding1({super.key});

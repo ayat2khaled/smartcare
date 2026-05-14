@@ -1,11 +1,11 @@
-import 'package:first_project/components/price_summary.dart';
-import 'package:first_project/models/order_model.dart';
-import 'package:first_project/models/cart_item_model.dart';
-import 'package:first_project/screens/order_success_screen.dart';
+import 'package:smartcare/components/price_summary.dart';
+import 'package:smartcare/models/order_model.dart';
+import 'package:smartcare/models/cart_item_model.dart';
+import 'package:smartcare/screens/order_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/cart_provider.dart';
-import 'package:first_project/providers/order_provider.dart';
+import 'package:smartcare/providers/cart_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});

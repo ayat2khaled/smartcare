@@ -1,5 +1,5 @@
-import 'package:first_project/models/cart_item_model.dart';
-import 'package:first_project/models/product_model.dart';
+import 'package:smartcare/models/cart_item_model.dart';
+import 'package:smartcare/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 class CartProvider with ChangeNotifier {

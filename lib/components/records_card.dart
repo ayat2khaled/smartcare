@@ -1,4 +1,4 @@
-import 'package:first_project/models/records_model.dart';
+import 'package:smartcare/models/records_model.dart';
 import 'package:flutter/material.dart';
 
 class RecordCard extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/models/home_screen_model.dart';
-import 'package:first_project/models/product_model.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/models/home_screen_model.dart';
+import 'package:smartcare/models/product_model.dart';
 
 /// Service to fetch health data & provide symptom checking
 class DataService {

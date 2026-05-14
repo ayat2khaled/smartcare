@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'package:first_project/components/hospital_action_button.dart';
-import 'package:first_project/components/hospital_doctor_card.dart';
-import 'package:first_project/services/data_service.dart';
-import 'package:first_project/models/home_screen_model.dart';
-import 'package:first_project/models/doctor_model.dart';
+import 'package:smartcare/components/hospital_action_button.dart';
+import 'package:smartcare/components/hospital_doctor_card.dart';
+import 'package:smartcare/services/data_service.dart';
+import 'package:smartcare/models/home_screen_model.dart';
+import 'package:smartcare/models/doctor_model.dart';
 import 'package:flutter/material.dart';
 
 class HospitalScreen extends StatefulWidget {

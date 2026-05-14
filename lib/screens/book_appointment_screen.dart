@@ -1,10 +1,10 @@
-import 'package:first_project/components/custom_input_field.dart';
-import 'package:first_project/components/date_item.dart';
-import 'package:first_project/components/time_slot.dart';
-import 'package:first_project/components/queue_status_card.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/screens/select_package_screen.dart';
-import 'package:first_project/services/slot_service.dart';
+import 'package:smartcare/components/custom_input_field.dart';
+import 'package:smartcare/components/date_item.dart';
+import 'package:smartcare/components/time_slot.dart';
+import 'package:smartcare/components/queue_status_card.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/screens/select_package_screen.dart';
+import 'package:smartcare/services/slot_service.dart';
 import 'package:flutter/material.dart';
 
 class BookAppointmentScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
-import 'package:first_project/components/doctor_header.dart';
-import 'package:first_project/components/info_card.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/screens/book_appointment_screen.dart';
+import 'package:smartcare/components/doctor_header.dart';
+import 'package:smartcare/components/info_card.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/screens/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
 
 class DoctorProfileScreen extends StatelessWidget {

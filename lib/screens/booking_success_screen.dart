@@ -1,13 +1,13 @@
-import 'package:first_project/screens/home_screen.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/models/booking_model.dart';
-import 'package:first_project/models/notification_model.dart';
-import 'package:first_project/providers/auth_provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
-import 'package:first_project/providers/booking_provider.dart';
-import 'package:first_project/providers/notification_provider.dart';
-import 'package:first_project/services/slot_service.dart';
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/screens/home_screen.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/models/booking_model.dart';
+import 'package:smartcare/models/notification_model.dart';
+import 'package:smartcare/providers/auth_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
+import 'package:smartcare/providers/booking_provider.dart';
+import 'package:smartcare/providers/notification_provider.dart';
+import 'package:smartcare/services/slot_service.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

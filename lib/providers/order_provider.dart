@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:first_project/models/order_model.dart';
-import 'package:first_project/models/notification_model.dart';
-import 'package:first_project/providers/notification_provider.dart';
+import 'package:smartcare/models/order_model.dart';
+import 'package:smartcare/models/notification_model.dart';
+import 'package:smartcare/providers/notification_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderProvider with ChangeNotifier {

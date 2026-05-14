@@ -1,13 +1,13 @@
-import 'package:first_project/components/cart_item_card.dart';
-import 'package:first_project/components/price_summary.dart';
-import 'package:first_project/models/cart_item_model.dart';
-import 'package:first_project/screens/checkout_screen.dart';
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/components/cart_item_card.dart';
+import 'package:smartcare/components/price_summary.dart';
+import 'package:smartcare/models/cart_item_model.dart';
+import 'package:smartcare/screens/checkout_screen.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/cart_provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
+import 'package:smartcare/providers/cart_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

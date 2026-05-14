@@ -1,14 +1,14 @@
-import 'package:first_project/components/profile_title.dart';
-import 'package:first_project/models/profile_model.dart';
-import 'package:first_project/screens/booking_screen.dart';
-import 'package:first_project/screens/my_orders_screen.dart';
-import 'package:first_project/screens/sign_in_screen.dart';
-import 'package:first_project/providers/auth_provider.dart';
-import 'package:first_project/providers/booking_provider.dart';
-import 'package:first_project/providers/order_provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
-import 'package:first_project/providers/notification_provider.dart';
-import 'package:first_project/themes/theme_provider.dart';
+import 'package:smartcare/components/profile_title.dart';
+import 'package:smartcare/models/profile_model.dart';
+import 'package:smartcare/screens/booking_screen.dart';
+import 'package:smartcare/screens/my_orders_screen.dart';
+import 'package:smartcare/screens/sign_in_screen.dart';
+import 'package:smartcare/providers/auth_provider.dart';
+import 'package:smartcare/providers/booking_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
+import 'package:smartcare/providers/notification_provider.dart';
+import 'package:smartcare/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

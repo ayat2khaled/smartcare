@@ -1,9 +1,9 @@
-import 'package:first_project/models/product_model.dart';
-import 'package:first_project/screens/product_details_screen.dart';
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/models/product_model.dart';
+import 'package:smartcare/screens/product_details_screen.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/cart_provider.dart';
+import 'package:smartcare/providers/cart_provider.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;

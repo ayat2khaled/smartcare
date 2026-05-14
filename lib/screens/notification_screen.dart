@@ -1,5 +1,5 @@
-import 'package:first_project/components/notification_card.dart';
-import 'package:first_project/providers/notification_provider.dart';
+import 'package:smartcare/components/notification_card.dart';
+import 'package:smartcare/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

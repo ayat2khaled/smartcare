@@ -1,10 +1,10 @@
-import 'package:first_project/components/product_card.dart';
-import 'package:first_project/models/product_model.dart';
-import 'package:first_project/services/data_service.dart';
-import 'package:first_project/screens/cart_screen.dart';
+import 'package:smartcare/components/product_card.dart';
+import 'package:smartcare/models/product_model.dart';
+import 'package:smartcare/services/data_service.dart';
+import 'package:smartcare/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/cart_provider.dart';
+import 'package:smartcare/providers/cart_provider.dart';
 
 class PharmacyScreen extends StatefulWidget {
   const PharmacyScreen({super.key});

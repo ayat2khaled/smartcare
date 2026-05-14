@@ -1,6 +1,6 @@
-import 'package:first_project/components/earn_points.dart';
-import 'package:first_project/components/rewards_card.dart';
-import 'package:first_project/models/rewards_model.dart';
+import 'package:smartcare/components/earn_points.dart';
+import 'package:smartcare/components/rewards_card.dart';
+import 'package:smartcare/models/rewards_model.dart';
 
 import 'package:flutter/material.dart';
 

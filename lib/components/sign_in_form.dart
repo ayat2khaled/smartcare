@@ -1,14 +1,14 @@
-import 'package:first_project/models/sign_in_model.dart';
-import 'package:first_project/providers/auth_provider.dart';
-import 'package:first_project/screens/sign_up_screen.dart';
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/models/sign_in_model.dart';
+import 'package:smartcare/providers/auth_provider.dart';
+import 'package:smartcare/screens/sign_up_screen.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:first_project/screens/home_screen.dart';
+import 'package:smartcare/screens/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
-import 'package:first_project/providers/order_provider.dart';
-import 'package:first_project/providers/booking_provider.dart';
-import 'package:first_project/providers/notification_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
+import 'package:smartcare/providers/booking_provider.dart';
+import 'package:smartcare/providers/notification_provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});

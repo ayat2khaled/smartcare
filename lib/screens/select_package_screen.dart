@@ -1,8 +1,8 @@
-import 'package:first_project/components/package_card.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/screens/review_summary_screen.dart';
+import 'package:smartcare/components/package_card.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/screens/review_summary_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:first_project/models/package_model.dart';
+import 'package:smartcare/models/package_model.dart';
 
 class SelectPackageScreen extends StatefulWidget {
   final DoctorModel doctor;

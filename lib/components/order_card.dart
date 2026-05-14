@@ -1,9 +1,9 @@
-import 'package:first_project/models/notification_model.dart';
-import 'package:first_project/models/order_model.dart';
-import 'package:first_project/providers/notification_provider.dart';
-import 'package:first_project/providers/order_provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/models/notification_model.dart';
+import 'package:smartcare/models/order_model.dart';
+import 'package:smartcare/providers/notification_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

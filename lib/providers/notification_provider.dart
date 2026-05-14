@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:first_project/models/notification_model.dart';
+import 'package:smartcare/models/notification_model.dart';
 
 class NotificationProvider with ChangeNotifier {
   List<NotificationModel> _notifications = [];

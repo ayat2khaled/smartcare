@@ -1,12 +1,12 @@
-import 'package:first_project/models/notification_model.dart';
-import 'package:first_project/providers/notification_provider.dart';
-import 'package:first_project/providers/order_provider.dart';
-import 'package:first_project/screens/home_screen.dart';
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/models/notification_model.dart';
+import 'package:smartcare/providers/notification_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
+import 'package:smartcare/screens/home_screen.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/cart_provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
+import 'package:smartcare/providers/cart_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   final String orderId;

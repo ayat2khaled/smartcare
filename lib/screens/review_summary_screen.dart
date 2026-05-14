@@ -1,14 +1,14 @@
-import 'package:first_project/components/doctor_info_title.dart';
-import 'package:first_project/components/review_datails.dart';
-import 'package:first_project/screens/booking_success_screen.dart';
-import 'package:first_project/models/doctor_model.dart';
-import 'package:first_project/models/package_model.dart';
+import 'package:smartcare/components/doctor_info_title.dart';
+import 'package:smartcare/components/review_datails.dart';
+import 'package:smartcare/screens/booking_success_screen.dart';
+import 'package:smartcare/models/doctor_model.dart';
+import 'package:smartcare/models/package_model.dart';
 
-import 'package:first_project/utils/top_snackbar.dart';
+import 'package:smartcare/utils/top_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/rewards_provider.dart';
+import 'package:smartcare/providers/rewards_provider.dart';
 
 class ReviewSummaryScreen extends StatefulWidget {
   final DoctorModel doctor;

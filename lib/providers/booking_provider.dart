@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:first_project/models/booking_model.dart';
+import 'package:smartcare/models/booking_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingProvider with ChangeNotifier {

@@ -1,7 +1,7 @@
-import 'package:first_project/screens/home_content_screen.dart';
-import 'package:first_project/screens/chatbot_screen.dart';
-import 'package:first_project/screens/profile_screen.dart';
-import 'package:first_project/screens/emergency_screen.dart';
+import 'package:smartcare/screens/home_content_screen.dart';
+import 'package:smartcare/screens/chatbot_screen.dart';
+import 'package:smartcare/screens/profile_screen.dart';
+import 'package:smartcare/screens/emergency_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

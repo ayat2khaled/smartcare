@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:first_project/components/sign_up_form.dart';
+import 'package:smartcare/components/sign_up_form.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});

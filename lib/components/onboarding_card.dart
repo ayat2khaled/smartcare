@@ -1,4 +1,4 @@
-import 'package:first_project/models/onboarding_model.dart';
+import 'package:smartcare/models/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingCard extends StatelessWidget {

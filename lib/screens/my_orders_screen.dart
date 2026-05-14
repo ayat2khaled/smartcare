@@ -1,7 +1,7 @@
-import 'package:first_project/components/order_card.dart';
+import 'package:smartcare/components/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/order_provider.dart';
+import 'package:smartcare/providers/order_provider.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({super.key});

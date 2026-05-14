@@ -1,7 +1,7 @@
-import 'package:first_project/models/cart_item_model.dart';
+import 'package:smartcare/models/cart_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/providers/cart_provider.dart';
+import 'package:smartcare/providers/cart_provider.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem item;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:first_project/Services/prediction_service.dart';
+import 'package:smartcare/Services/prediction_service.dart';
 
 class MedicalChatScreen extends StatefulWidget {
   const MedicalChatScreen({super.key});
